@@ -13,9 +13,9 @@
 <link rel="apple-touch-icon" href="./icons/icon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,600..900&family=Anton&family=Archivo+Black&family=Zen+Old+Mincho:wght@700;900&family=Shippori+Mincho:wght@600;800&family=Noto+Sans+JP:wght@500;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Black&family=Bebas+Neue&family=Bodoni+Moda:wght@400;700;900&family=Cormorant+Garamond:wght@300;500;700&family=DM+Serif+Display&family=Dela+Gothic+One&family=Hina+Mincho&family=Kaisei+Decol:wght@400;700&family=Klee+One:wght@400;600&family=Libre+Baskerville:wght@400;700&family=Montserrat:wght@400;700;900&family=Noto+Sans+JP:wght@400;700;900&family=Noto+Serif+JP:wght@400;700;900&family=Oswald:wght@400;700&family=Playfair+Display:wght@400;700;900&family=RocknRoll+One&family=Shippori+Mincho:wght@400;600;800&family=Space+Grotesk:wght@400;700&family=Syne:wght@400;700;800&family=Yuji+Syuku&family=Zen+Kaku+Gothic+New:wght@400;700;900&family=Zen+Maru+Gothic:wght@400;700;900&family=Zen+Old+Mincho:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
-:root{
+  :root{
     --ink:#101216; --ink2:#191c22; --line:#292d35;
     --paper:#e9e6df; --muted:#868c96; --hot:#ff4d2e; --r:2px;
   }
@@ -28,69 +28,86 @@
   }
   header{display:flex;align-items:baseline;gap:11px;padding:13px 18px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--ink);z-index:9}
   header h1{font-family:"Archivo Black",sans-serif;font-size:16px;margin:0;letter-spacing:-.01em}
-  header span{font-family:"Shippori Mincho",serif;font-size:10px;color:var(--muted);letter-spacing:.32em}
+  header em{font-family:"Shippori Mincho",serif;font-size:10px;color:var(--muted);letter-spacing:.32em;font-style:normal}
 
-  .wrap{display:grid;grid-template-columns:minmax(0,1fr) 372px}
-  @media(max-width:920px){.wrap{grid-template-columns:1fr}}
+  .wrap{display:grid;grid-template-columns:minmax(0,1fr) 390px}
+  @media(max-width:960px){.wrap{grid-template-columns:1fr}}
 
-  .stage{padding:22px 18px 44px;display:flex;flex-direction:column;align-items:center;gap:18px;background:repeating-linear-gradient(45deg,#15181d 0 9px,#131519 9px 18px)}
-  #big{display:block;max-width:min(100%,420px);max-height:56vh;width:auto;height:auto;box-shadow:0 16px 44px rgba(0,0,0,.6);cursor:grab;touch-action:none;background:#222}
-  #big:active{cursor:grabbing}
+  .stage{padding:20px 18px 44px;display:flex;flex-direction:column;align-items:center;gap:16px;background:repeating-linear-gradient(45deg,#15181d 0 9px,#131519 9px 18px)}
+  #big{display:block;max-width:min(100%,420px);max-height:54vh;width:auto;height:auto;box-shadow:0 16px 44px rgba(0,0,0,.6);cursor:grab;touch-action:none;background:#222}
+  #big.grabbing{cursor:grabbing}
+  .dragmode{display:flex;gap:6px;align-items:center;font-size:11px;color:var(--muted)}
+  .dragmode button{padding:5px 10px;font-size:11px}
+  .dragmode button[aria-pressed=true]{border-color:var(--hot);color:#fff}
 
   .actual{display:flex;align-items:flex-end;gap:16px;padding:12px 16px;border:1px solid var(--line);background:rgba(0,0,0,.35)}
   .actual figure{margin:0;display:flex;flex-direction:column;align-items:center;gap:5px}
   .actual img{display:block;background:#222}
   .actual figcaption{font-family:"Bodoni Moda",serif;font-size:9px;color:var(--muted);letter-spacing:.14em}
-  .actual .note{font-size:10px;color:var(--muted);line-height:1.7;max-width:120px}
+  .actual .note{font-size:10px;color:var(--muted);line-height:1.7;max-width:112px}
 
   .panel{border-left:1px solid var(--line);padding-bottom:64px}
-  @media(max-width:920px){.panel{border-left:0;border-top:1px solid var(--line)}}
+  @media(max-width:960px){.panel{border-left:0;border-top:1px solid var(--line)}}
   section{border-bottom:1px solid var(--line);padding:15px 18px}
   h2{font-family:"Bodoni Moda",serif;font-size:10px;font-weight:700;letter-spacing:.26em;text-transform:uppercase;color:var(--muted);margin:0 0 11px}
   label{display:block;font-size:11px;color:var(--muted);margin:0 0 4px}
-  input[type=text],textarea,select{width:100%;background:var(--ink2);border:1px solid var(--line);color:var(--paper);border-radius:var(--r);padding:8px 9px;font:inherit;font-size:13px}
+  input[type=text],textarea,select{width:100%;background:var(--ink2);border:1px solid var(--line);color:var(--paper);border-radius:var(--r);padding:7px 8px;font:inherit;font-size:12px}
+  select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);background-position:calc(100% - 13px) 13px,calc(100% - 8px) 13px;background-size:5px 5px;background-repeat:no-repeat;padding-right:24px}
   textarea{resize:vertical}
   :focus-visible{outline:2px solid var(--hot);outline-offset:1px}
-  .field{margin-bottom:10px}
+  .field{margin-bottom:9px}
+  .duo{display:grid;grid-template-columns:1fr 88px;gap:6px}
+  .trio{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px}
   .slider{display:flex;align-items:center;gap:9px;margin-bottom:8px}
-  .slider label{flex:0 0 74px;margin:0}
-  input[type=range]{flex:1;accent-color:var(--hot)}
+  .slider label{flex:0 0 78px;margin:0}
+  input[type=range]{flex:1;accent-color:var(--hot);min-width:0}
   .val{font-family:"Bodoni Moda",serif;font-size:11px;width:34px;text-align:right}
   button{font:inherit;font-size:12px;background:var(--ink2);color:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:8px 10px;cursor:pointer}
   button:hover{border-color:var(--muted)}
   button.primary{background:var(--hot);border-color:var(--hot);color:#fff;font-weight:700;width:100%;padding:11px}
   .seg{display:grid;grid-template-columns:repeat(4,1fr);gap:5px}
-  .seg.three{grid-template-columns:repeat(3,1fr)}
   .seg button{padding:8px 2px;text-align:center;line-height:1.35;font-size:11px}
   .seg button[aria-pressed=true]{border-color:var(--hot);color:#fff}
   .seg button small{display:block;font-family:"Bodoni Moda",serif;font-size:8px;color:var(--muted);letter-spacing:.06em}
-  .drop{border:1px dashed var(--line);border-radius:var(--r);padding:20px;text-align:center;color:var(--muted);font-size:12px;line-height:1.8;cursor:pointer}
+  .drop{border:1px dashed var(--line);border-radius:var(--r);padding:18px;text-align:center;color:var(--muted);font-size:12px;line-height:1.8;cursor:pointer}
   .drop:hover{border-color:var(--muted);color:var(--paper)}
   .drop b{color:var(--paper)}
   .chips{display:flex;gap:5px;margin-top:9px}
-  .chip{flex:1;height:30px;border:1px solid rgba(255,255,255,.14);border-radius:var(--r);cursor:pointer}
+  .chip{flex:1;height:28px;border:1px solid rgba(255,255,255,.14);border-radius:var(--r);cursor:pointer}
   .chip[aria-pressed=true]{outline:2px solid var(--hot);outline-offset:1px}
-  .presets{display:flex;flex-direction:column;gap:6px}
-  .preset{text-align:left;display:flex;gap:9px;align-items:flex-start;padding:9px 10px}
-  .preset[aria-pressed=true]{border-color:var(--hot)}
-  .preset .rk{font-family:"Bodoni Moda",serif;font-size:14px;color:var(--muted);line-height:1}
-  .preset[aria-pressed=true] .rk{color:var(--hot)}
-  .preset .ds{display:block;font-size:10px;color:var(--muted);margin-top:2px}
+
+  .block{border:1px solid var(--line);border-radius:var(--r);margin-bottom:9px}
+  .block.sel{border-color:var(--hot)}
+  .block>header{display:flex;align-items:center;gap:8px;padding:8px 10px;border:0;position:static;background:transparent;cursor:pointer}
+  .block>header input{accent-color:var(--hot);width:15px;height:15px}
+  .block>header b{font-size:12px;font-weight:500;flex:1}
+  .block>header .tag{font-family:"Bodoni Moda",serif;font-size:9px;color:var(--muted);letter-spacing:.16em}
+  .block .body{padding:0 10px 10px;display:none}
+  .block.open .body{display:block}
+  .place{display:grid;grid-template-columns:repeat(6,1fr);gap:4px;margin-bottom:8px}
+  .place button{padding:6px 0;font-size:10px}
+
   .toggle{display:flex;align-items:center;gap:8px;margin-bottom:8px;font-size:12px;cursor:pointer;color:var(--paper)}
   .toggle input{accent-color:var(--hot);width:15px;height:15px}
   .warn{font-size:11px;line-height:1.7;padding:8px 10px;border-left:2px solid var(--hot);background:rgba(255,77,46,.08);margin-top:10px}
   .ok{border-left-color:#3ecf8e;background:rgba(62,207,142,.07)}
   .count{float:right;font-family:"Bodoni Moda",serif;font-size:10px}
   .count.over{color:var(--hot)}
+  .hint{font-size:10px;color:var(--muted);line-height:1.7;margin:6px 0 0}
 </style>
 </head>
 <body>
 
-<header><h1>THUMB FORGE</h1><span>寸 法 検 証 付</span></header>
+<header><h1>THUMB FORGE</h1><em>寸 法 検 証 付</em></header>
 
 <div class="wrap">
   <div class="stage">
     <canvas id="big" width="1080" height="1350"></canvas>
+    <div class="dragmode">
+      <span>ドラッグで動かす対象</span>
+      <button id="dmText" aria-pressed="true">文字</button>
+      <button id="dmMask" aria-pressed="false">切り抜き</button>
+    </div>
     <div class="actual">
       <div class="note">実寸プレビュー。ここで読めなければ、大きい画面で読めても意味がない。</div>
       <figure><img id="pv1" alt="実寸プレビュー 小"><figcaption id="c1">–</figcaption></figure>
@@ -113,32 +130,21 @@
     </section>
 
     <section>
-      <h2>Copy</h2>
-      <div class="field">
-        <label for="tMain">メイン<span class="count" id="cnMain">0</span></label>
-        <textarea id="tMain" rows="2">光の生まれる場所</textarea>
-      </div>
-      <div class="field"><label for="tSub">サブ<span class="count" id="cnSub">0</span></label><input type="text" id="tSub" value="長崎・五島列島 8日間"></div>
-      <div class="field"><label for="tTag">タグ（色面に載る短語）</label><input type="text" id="tTag" value="PHOTO TRIP"></div>
+      <h2>Text</h2>
+      <div id="blocks"></div>
+      <p class="hint">プレビュー上の文字を直接ドラッグして位置を決められます。写真から書体を提案させたいときは下の3つから。</p>
+      <div class="seg" id="presets" style="grid-template-columns:repeat(3,1fr);margin-top:9px"></div>
     </section>
 
     <section>
-      <h2>Layout</h2>
-      <div class="seg three" id="layouts"></div>
-      <div style="height:11px"></div>
-      <div class="presets" id="presets"></div>
-    </section>
-
-    <section>
-      <h2>Adjust</h2>
+      <h2>Photo adjust</h2>
+      <div class="slider"><label for="sDark">下を沈める</label><input type="range" id="sDark" min="0" max="100" value="42"><span class="val" id="vDark">42</span></div>
+      <div class="slider"><label for="sDim">全体を暗く</label><input type="range" id="sDim" min="0" max="80" value="0"><span class="val" id="vDim">0</span></div>
       <label class="toggle"><input type="checkbox" id="cMask">被写体を文字の前に出す</label>
-      <label class="toggle"><input type="checkbox" id="cEdge" checked>文字に縁をつける</label>
-      <label class="toggle"><input type="checkbox" id="cSafe" checked>セーフゾーンを表示</label>
-      <div class="slider"><label for="sType">文字の大きさ</label><input type="range" id="sType" min="70" max="140" value="100"><span class="val" id="vType">100</span></div>
-      <div class="slider"><label for="sDark">写真を沈める</label><input type="range" id="sDark" min="0" max="100" value="42"><span class="val" id="vDark">42</span></div>
-      <div class="slider"><label for="sZoom">寄り</label><input type="range" id="sZoom" min="100" max="220" value="100"><span class="val" id="vZoom">100</span></div>
       <div class="slider"><label for="sMaskW">切抜き幅</label><input type="range" id="sMaskW" min="10" max="95" value="46"><span class="val" id="vMaskW">46</span></div>
       <div class="slider"><label for="sMaskH">切抜き高</label><input type="range" id="sMaskH" min="10" max="95" value="52"><span class="val" id="vMaskH">52</span></div>
+      <label class="toggle"><input type="checkbox" id="cSafe" checked>セーフゾーンを表示</label>
+      <p class="hint" id="maskHint">切り抜きは楕円。位置はドラッグ対象を「切り抜き」に切り替えて動かします。</p>
     </section>
 
     <section><button class="primary" id="save">PNGで書き出す</button></section>
@@ -150,35 +156,65 @@
 const $=id=>document.getElementById(id);
 const cv=$("big"),ctx=cv.getContext("2d");
 
-/* formats: preview widths are the sizes these are actually seen at */
+/* ---------- data ---------- */
 const RATIOS=[
- {id:"ig45",  nm:"Instagram", sub:"4:5",  w:1080,h:1350, small:120,mid:184, safe:"igsquare"},
- {id:"ig11",  nm:"Instagram", sub:"1:1",  w:1080,h:1080, small:120,mid:184, safe:null},
- {id:"story", nm:"Story",     sub:"9:16", w:1080,h:1920, small:96, mid:150, safe:"story"},
- {id:"yt",    nm:"YouTube",   sub:"16:9", w:1280,h:720,  small:168,mid:246, safe:"yt"}
+ {id:"ig45",nm:"Instagram",sub:"4:5",w:1080,h:1350,small:120,mid:184,safe:"igsquare"},
+ {id:"ig11",nm:"Instagram",sub:"1:1",w:1080,h:1080,small:120,mid:184,safe:null},
+ {id:"story",nm:"Story",sub:"9:16",w:1080,h:1920,small:96,mid:150,safe:"story"},
+ {id:"yt",nm:"YouTube",sub:"16:9",w:1280,h:720,small:168,mid:246,safe:"yt"}
 ];
-const LAYOUTS=[
- {id:"band", nm:"下ベタ帯", ds:"最も潰れにくい"},
- {id:"center", nm:"中央抜き", ds:"写真を見せる"},
- {id:"left", nm:"左寄せ縦", ds:"IGグリッド向き"}
+const FONTS=[
+ {id:"zenold", nm:"Zen Old Mincho（明朝）", f:'"Zen Old Mincho", serif', jp:1},
+ {id:"shippori",nm:"しっぽり明朝", f:'"Shippori Mincho", serif', jp:1},
+ {id:"notoserifjp",nm:"Noto Serif JP（明朝）", f:'"Noto Serif JP", serif', jp:1},
+ {id:"hina", nm:"ひな明朝（細）", f:'"Hina Mincho", serif', jp:1},
+ {id:"yuji", nm:"Yuji Syuku（筆）", f:'"Yuji Syuku", serif', jp:1},
+ {id:"klee", nm:"Klee One（手書き）", f:'"Klee One", serif', jp:1},
+ {id:"notosansjp",nm:"Noto Sans JP（ゴシック）", f:'"Noto Sans JP", sans-serif', jp:1},
+ {id:"zenkaku",nm:"Zen角ゴシック", f:'"Zen Kaku Gothic New", sans-serif', jp:1},
+ {id:"zenmaru",nm:"Zen丸ゴシック", f:'"Zen Maru Gothic", sans-serif', jp:1},
+ {id:"dela", nm:"Dela Gothic One（極太）", f:'"Dela Gothic One", sans-serif', jp:1},
+ {id:"kaisei",nm:"Kaisei Decol（丸み）", f:'"Kaisei Decol", serif', jp:1},
+ {id:"rocknroll",nm:"RocknRoll One", f:'"RocknRoll One", sans-serif', jp:1},
+ {id:"anton", nm:"Anton（欧文・極太）", f:'"Anton", sans-serif'},
+ {id:"archivo",nm:"Archivo Black（欧文）", f:'"Archivo Black", sans-serif'},
+ {id:"bebas", nm:"Bebas Neue（欧文・縦長）", f:'"Bebas Neue", sans-serif'},
+ {id:"oswald",nm:"Oswald（欧文）", f:'"Oswald", sans-serif'},
+ {id:"montserrat",nm:"Montserrat（欧文）", f:'"Montserrat", sans-serif'},
+ {id:"space", nm:"Space Grotesk（欧文）", f:'"Space Grotesk", sans-serif'},
+ {id:"syne", nm:"Syne（欧文・癖）", f:'"Syne", sans-serif'},
+ {id:"bodoni",nm:"Bodoni Moda（欧文・雑誌）", f:'"Bodoni Moda", serif'},
+ {id:"playfair",nm:"Playfair Display（欧文）", f:'"Playfair Display", serif'},
+ {id:"dmserif",nm:"DM Serif Display（欧文）", f:'"DM Serif Display", serif'},
+ {id:"cormorant",nm:"Cormorant（欧文・細）", f:'"Cormorant Garamond", serif'},
+ {id:"baskerville",nm:"Libre Baskerville（欧文）", f:'"Libre Baskerville", serif'}
 ];
-const TYPES=[
- {id:"impact",nm:"IMPACT",ds:"Anton × Noto Sans 900 ／ 一番読める",
-  disp:{f:'"Anton", sans-serif',w:400,tr:0},jp:{f:'"Noto Sans JP", sans-serif',w:900,tr:.01},
-  sub:{f:'"Noto Sans JP", sans-serif',w:700,tr:.04},
+const fontOf=id=>FONTS.find(f=>f.id===id)||FONTS[0];
+
+const SUGGEST=[
+ {id:"impact",nm:"IMPACT",ds:"太く確実に読める",main:"notosansjp",mw:900,sub:"notosansjp",sw:700,
   score:a=>1.0+a.edge*.8+a.sat*.5},
- {id:"mag",nm:"MAGAZINE",ds:"Bodoni × Zen Old Mincho 900 ／ 雑誌の質感",
-  disp:{f:'"Bodoni Moda", serif',w:800,tr:.03},jp:{f:'"Zen Old Mincho", serif',w:900,tr:.03},
-  sub:{f:'"Bodoni Moda", serif',w:600,tr:.16},
+ {id:"mag",nm:"MAGAZINE",ds:"雑誌の質感",main:"zenold",mw:900,sub:"bodoni",sw:700,
   score:a=>.9+(1-a.sat)*.9+(1-a.edge)*.6},
- {id:"still",nm:"STILL",ds:"Archivo Black × しっぽり明朝 ／ 静かな写真に",
-  disp:{f:'"Archivo Black", sans-serif',w:400,tr:.02},jp:{f:'"Shippori Mincho", serif',w:800,tr:.06},
-  sub:{f:'"Bodoni Moda", serif',w:600,tr:.18},
+ {id:"still",nm:"STILL",ds:"静かな写真に",main:"shippori",mw:800,sub:"cormorant",sw:500,
   score:a=>.8+(1-a.luma)*1.1+(1-a.edge)*.7}
 ];
 
-let ratio=RATIOS[0],layout=LAYOUTS[0],type=TYPES[0];
-let img=null,analysis=null,accent="#ff4d2e",mask={x:.5,y:.42},ranked=[];
+const BLOCKS=[
+ {key:"main",nm:"メイン",tag:"MAIN"},
+ {key:"sub", nm:"サブ", tag:"SUB"},
+ {key:"tag", nm:"タグ", tag:"TAG"}
+];
+const state={
+ main:{on:true, text:"光の生まれる場所", font:"zenold", weight:900, size:100, vert:false, align:"left", color:"white", x:.07,y:.62, open:true},
+ sub :{on:true, text:"長崎・五島列島 8日間", font:"bodoni", weight:700, size:100, vert:false, align:"left", color:"white", x:.07,y:.80, open:false},
+ tag :{on:false,text:"PHOTO TRIP", font:"bodoni", weight:700, size:100, vert:false, align:"left", color:"accent",x:.07,y:.52, open:false}
+};
+const BASE={main:.115,sub:.032,tag:.028};
+
+let ratio=RATIOS[0],img=null,analysis=null,accent="#ff4d2e";
+let mask={x:.5,y:.42},dragMode="text",sel="main",exporting=false;
+let boxes=[],drag=null;
 
 /* ---------- analysis ---------- */
 function analyze(im){
@@ -197,7 +233,7 @@ function analyze(im){
   return{palette:kmeans(pts,5),luma:lum,sat:Math.min(1,sat),edge:Math.min(1,e/(px*.18))};
 }
 function kmeans(pts,k){
-  let cen=[];for(let i=0;i<k;i++)cen.push(pts[Math.floor((i+.5)*pts.length/k)].slice());
+  const cen=[];for(let i=0;i<k;i++)cen.push(pts[Math.floor((i+.5)*pts.length/k)].slice());
   const as=new Array(pts.length).fill(0);
   for(let it=0;it<8;it++){
     for(let i=0;i<pts.length;i++){let b=0,bd=1/0;
@@ -216,24 +252,67 @@ const lu=h=>{const[r,g,b]=toRgb(h);return(.2126*r+.7152*g+.0722*b)/255;};
 function pickAccent(p){let best=p[0],bs=-1;p.forEach(h=>{const[r,g,b]=toRgb(h);const mx=Math.max(r,g,b),mn=Math.min(r,g,b);
   const s=mx?(mx-mn)/mx:0,l=lu(h);const v=s*1.7+(1-Math.abs(l-.5)*2)*.7;if(v>bs){bs=v;best=h;}});return best;}
 
-/* ---------- text helpers ---------- */
+/* ---------- text drawing ---------- */
+const ROT=new Set(["ー","―","−","—","〜","～","（","）","(",")","「","」","『","』","【","】","［","］","…","‥","：","〈","〉","｛","｝"]);
+const colorOf=c=>c==="white"?"#ffffff":c==="black"?"#111214":accent;
 const setF=(f,s,w)=>ctx.font=`${w} ${s}px ${f}`;
-function tw(str,tr){let w=0;for(const ch of str)w+=ctx.measureText(ch).width+tr;return w-tr;}
-function draw(str,x,y,tr,al="left",stroke=0){
-  const w=tw(str,tr);let cx=al==="center"?x-w/2:al==="right"?x-w:x;
-  for(const ch of str){
-    if(stroke){ctx.lineWidth=stroke;ctx.lineJoin="round";ctx.strokeText(ch,cx,y);}
-    ctx.fillText(ch,cx,y);cx+=ctx.measureText(ch).width+tr;
-  }
+
+function measureH(lines,size,tr){
+  let w=0;
+  lines.forEach(l=>{let x=0;for(const ch of l)x+=ctx.measureText(ch).width+tr;w=Math.max(w,x-tr);});
   return w;
 }
-const isLatin=s=>!/[^\x00-\x7F]/.test(s);
-function fontFor(str){return isLatin(str)?type.disp:type.jp;}
-function fit(lines,maxW,maxSize,fo){
-  let s=maxSize;
-  for(let i=0;i<50;i++){setF(fo.f,s,fo.w);
-    if(lines.every(l=>tw(l,s*fo.tr)<=maxW))break;s*=.95;}
-  return s;
+function drawBlock(key){
+  const b=state[key];
+  if(!b.on||!b.text.trim())return null;
+  const W=cv.width,H=cv.height;
+  const lines=b.text.split("\n").filter(l=>l.length);
+  if(!lines.length)return null;
+  const fo=fontOf(b.font);
+  const size=W*BASE[key]*(b.size/100);
+  const tr=size*.02;
+  setF(fo.f,size,b.weight);
+  const x0=b.x*W,y0=b.y*H;
+  const stroke=$("cEdge")&&$("cEdge").checked?size*.055:0;
+  let box;
+
+  if(key==="tag"){
+    const t=lines[0],w=measureH([t],size,tr),px=size*.7,h=size*1.9;
+    ctx.fillStyle=b.color==="accent"?accent:colorOf(b.color);
+    ctx.fillRect(x0,y0,w+px*2,h);
+    ctx.fillStyle=lu(b.color==="accent"?accent:colorOf(b.color))>.62?"#111214":"#ffffff";
+    let cx=x0+px;for(const ch of t){ctx.fillText(ch,cx,y0+h*.72);cx+=ctx.measureText(ch).width+tr;}
+    box={x:x0,y:y0,w:w+px*2,h};
+  } else if(b.vert){
+    const colW=size*1.55,maxCh=Math.max(...lines.map(l=>[...l].length));
+    const bw=colW*lines.length,bh=maxCh*size*1.06;
+    ctx.fillStyle=colorOf(b.color);ctx.strokeStyle=b.color==="black"?"rgba(255,255,255,.6)":"rgba(0,0,0,.55)";
+    ctx.lineJoin="round";ctx.lineWidth=stroke;
+    lines.forEach((line,i)=>{
+      const cx=x0+bw-colW*(i+.5);let y=y0;
+      for(const ch of [...line]){
+        const w=ctx.measureText(ch).width;
+        ctx.save();
+        if(ROT.has(ch)){ctx.translate(cx,y+size*.5);ctx.rotate(Math.PI/2);
+          if(stroke)ctx.strokeText(ch,-w/2,size*.34);ctx.fillText(ch,-w/2,size*.34);}
+        else{if(stroke)ctx.strokeText(ch,cx-w/2,y+size*.85);ctx.fillText(ch,cx-w/2,y+size*.85);}
+        ctx.restore();y+=size*1.06;
+      }
+    });
+    box={x:x0,y:y0,w:bw,h:bh};
+  } else {
+    const lh=size*1.24,bw=measureH(lines,size,tr),bh=lh*(lines.length-1)+size*1.1;
+    ctx.fillStyle=colorOf(b.color);ctx.strokeStyle=b.color==="black"?"rgba(255,255,255,.6)":"rgba(0,0,0,.55)";
+    ctx.lineJoin="round";ctx.lineWidth=stroke;
+    lines.forEach((l,i)=>{
+      const w=measureH([l],size,tr);
+      let cx=b.align==="center"?x0+(bw-w)/2:b.align==="right"?x0+bw-w:x0;
+      const y=y0+i*lh+size*.86;
+      for(const ch of l){if(stroke)ctx.strokeText(ch,cx,y);ctx.fillText(ch,cx,y);cx+=ctx.measureText(ch).width+tr;}
+    });
+    box={x:x0,y:y0,w:bw,h:bh};
+  }
+  box.key=key;return box;
 }
 
 /* ---------- render ---------- */
@@ -241,111 +320,55 @@ function render(){
   const W=cv.width,H=cv.height;
   ctx.clearRect(0,0,W,H);ctx.fillStyle="#1b1e23";ctx.fillRect(0,0,W,H);
   if(!img){ph();syncPv();return;}
-  const zoom=+$("sZoom").value/100;
-  photo(zoom);
-  const dark=+$("sDark").value/100;
-  scrim(dark);
-
-  const main=$("tMain").value.split("\n").filter(Boolean).slice(0,3);
-  const sub=$("tSub").value.trim(),tag=$("tTag").value.trim();
-  const sc=+$("sType").value/100;
-  const pad=W*.06;
-
-  if(layout.id==="band")   bandLayout(main,sub,tag,pad,sc);
-  if(layout.id==="center") centerLayout(main,sub,tag,pad,sc,zoom,dark);
-  if(layout.id==="left")   leftLayout(main,sub,tag,pad,sc);
-
-  if($("cSafe").checked) safe();
-  syncPv();
-}
-function photo(z){
-  const W=cv.width,H=cv.height;
-  const s=Math.max(W/img.width,H/img.height)*z,w=img.width*s,h=img.height*s;
-  ctx.drawImage(img,(W-w)/2,(H-h)/2,w,h);
-}
-function scrim(d){
-  if(d<=0)return;const W=cv.width,H=cv.height;
-  const g=ctx.createLinearGradient(0,H*.25,0,H);
-  g.addColorStop(0,"rgba(0,0,0,0)");g.addColorStop(1,`rgba(0,0,0,${.9*d})`);
-  ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
-  ctx.fillStyle=`rgba(0,0,0,${.25*d})`;ctx.fillRect(0,0,W,H);
-}
-function tagChip(x,y,txt,align="left"){
-  if(!txt)return 0;
-  const W=cv.width,s=W*.026;
-  setF(type.sub.f,s,type.sub.w);
-  const t=isLatin(txt)?txt.toUpperCase():txt,tr=s*type.sub.tr;
-  const w=tw(t,tr),px=s*.7,h=s*1.9;
-  const bx=align==="center"?x-(w+px*2)/2:x;
-  ctx.fillStyle=accent;ctx.fillRect(bx,y-h*.72,w+px*2,h);
-  ctx.fillStyle=lu(accent)>.62?"#111":"#fff";
-  draw(t,bx+px,y+s*.1,tr);
-  return h;
-}
-function bandLayout(main,sub,tag,pad,sc){
-  const W=cv.width,H=cv.height;
-  const fo=fontFor(main[0]||"");
-  const size=fit(main,W-pad*2,W*(cv.width>cv.height?.115:.135)*sc,fo);
-  const lh=size*1.22;
-  const blockH=lh*main.length+(sub?size*.85:0)+(tag?size*.9:0)+pad*1.2;
-  ctx.fillStyle="rgba(0,0,0,.55)";ctx.fillRect(0,H-blockH-pad*.4,W,blockH+pad*.4);
-  ctx.fillStyle=accent;ctx.fillRect(0,H-blockH-pad*.4,W,Math.max(4,W*.006));
-  let y=H-pad-(sub?size*.9:0)-(main.length-1)*lh;
-  setF(fo.f,size,fo.w);
-  ctx.fillStyle="#fff";ctx.strokeStyle="rgba(0,0,0,.55)";
-  const st=$("cEdge").checked?size*.055:0;
-  main.forEach((l,i)=>draw(isLatin(l)?l.toUpperCase():l,pad,y+i*lh,size*fo.tr,"left",st));
-  if(tag)tagChip(pad,y-lh*.92,tag);
-  if(sub){const s2=W*.03*sc;setF(type.sub.f,s2,type.sub.w);ctx.fillStyle="rgba(255,255,255,.92)";
-    draw(isLatin(sub)?sub.toUpperCase():sub,pad,y+(main.length-1)*lh+size*.82,s2*type.sub.tr);}
-}
-function centerLayout(main,sub,tag,pad,sc,zoom,dark){
-  const W=cv.width,H=cv.height;
-  const fo=fontFor(main[0]||"");
-  const size=fit(main,W-pad*2,W*(W>H?.13:.16)*sc,fo);
-  const lh=size*1.2;
-  let y=H*.5-((main.length-1)*lh)/2+size*.32;
-  setF(fo.f,size,fo.w);ctx.fillStyle="#fff";ctx.strokeStyle="rgba(0,0,0,.5)";
-  const st=$("cEdge").checked?size*.06:0;
-  main.forEach((l,i)=>draw(isLatin(l)?l.toUpperCase():l,W/2,y+i*lh,size*fo.tr,"center",st));
-  if($("cMask").checked&&img){
+  photo();shade();
+  boxes=[];
+  ["tag","sub","main"].forEach(k=>{const b=drawBlock(k);if(b)boxes.push(b);});
+  if($("cMask").checked){
     ctx.save();ctx.beginPath();
     ctx.ellipse(mask.x*W,mask.y*H,W*(+$("sMaskW").value/100)/2,H*(+$("sMaskH").value/100)/2,0,0,Math.PI*2);
-    ctx.clip();photo(zoom);scrim(dark);ctx.restore();
+    ctx.clip();photo();shade();ctx.restore();
   }
-  if(tag)tagChip(W/2,H*.5-((main.length-1)*lh)/2-size*.95,tag,"center");
-  if(sub){const s2=W*.03*sc;setF(type.sub.f,s2,type.sub.w);ctx.fillStyle="rgba(255,255,255,.92)";
-    draw(isLatin(sub)?sub.toUpperCase():sub,W/2,y+(main.length-1)*lh+size*.95,s2*type.sub.tr,"center");}
+  if(!exporting){
+    if($("cSafe").checked)safe();
+    guides();
+  }
+  syncPv();
 }
-function leftLayout(main,sub,tag,pad,sc){
+function photo(){
   const W=cv.width,H=cv.height;
-  ctx.fillStyle=accent;ctx.fillRect(0,0,Math.max(6,W*.022),H);
-  const fo=fontFor(main[0]||"");
-  const size=fit(main,W*.62,W*(W>H?.115:.14)*sc,fo);
-  const lh=size*1.2,x=pad*1.25;
-  let y=H*.62-((main.length-1)*lh);
-  setF(fo.f,size,fo.w);ctx.fillStyle="#fff";ctx.strokeStyle="rgba(0,0,0,.5)";
-  const st=$("cEdge").checked?size*.06:0;
-  main.forEach((l,i)=>draw(isLatin(l)?l.toUpperCase():l,x,y+i*lh,size*fo.tr,"left",st));
-  if(tag)tagChip(x,y-lh*.95,tag);
-  if(sub){const s2=W*.029*sc;setF(type.sub.f,s2,type.sub.w);ctx.fillStyle="rgba(255,255,255,.9)";
-    draw(isLatin(sub)?sub.toUpperCase():sub,x,y+(main.length-1)*lh+size*.85,s2*type.sub.tr);}
+  const s=Math.max(W/img.width,H/img.height),w=img.width*s,h=img.height*s;
+  ctx.drawImage(img,(W-w)/2,(H-h)/2,w,h);
+}
+function shade(){
+  const W=cv.width,H=cv.height;
+  const d=+$("sDark").value/100,dim=+$("sDim").value/100;
+  if(d>0){const g=ctx.createLinearGradient(0,H*.25,0,H);
+    g.addColorStop(0,"rgba(0,0,0,0)");g.addColorStop(1,`rgba(0,0,0,${.92*d})`);
+    ctx.fillStyle=g;ctx.fillRect(0,0,W,H);}
+  if(dim>0){ctx.fillStyle=`rgba(0,0,0,${dim})`;ctx.fillRect(0,0,W,H);}
+}
+function guides(){
+  const W=cv.width;
+  ctx.save();ctx.setLineDash([W*.008,W*.008]);ctx.lineWidth=Math.max(2,W*.0025);
+  boxes.forEach(b=>{
+    ctx.strokeStyle=b.key===sel?"rgba(255,77,46,.9)":"rgba(255,255,255,.22)";
+    ctx.strokeRect(b.x-W*.008,b.y-W*.008,b.w+W*.016,b.h+W*.016);
+  });
+  if(dragMode==="mask"&&$("cMask").checked){
+    ctx.strokeStyle="rgba(255,77,46,.9)";ctx.beginPath();
+    ctx.ellipse(mask.x*W,mask.y*cv.height,W*(+$("sMaskW").value/100)/2,cv.height*(+$("sMaskH").value/100)/2,0,0,Math.PI*2);
+    ctx.stroke();
+  }
+  ctx.restore();
 }
 function safe(){
   const W=cv.width,H=cv.height;
   ctx.save();ctx.setLineDash([W*.012,W*.012]);ctx.lineWidth=Math.max(2,W*.003);
   ctx.strokeStyle="rgba(255,255,255,.45)";
-  if(ratio.safe==="yt"){ // 再生時間バッジ
-    const bw=W*.11,bh=H*.075;ctx.strokeRect(W-bw-W*.02,H-bh-H*.03,bw,bh);
-  }
-  if(ratio.safe==="igsquare"){ // グリッドで正方形に切られる範囲
-    const s=W,top=(H-s)/2;ctx.strokeRect(0,top,s,s);
-  }
-  if(ratio.safe==="story"){ // 上下UIに隠れる帯
-    ctx.fillStyle="rgba(255,0,0,.10)";
-    ctx.fillRect(0,0,W,H*.13);ctx.fillRect(0,H*.82,W,H*.18);
-    ctx.strokeRect(0,H*.13,W,H*.69);
-  }
+  if(ratio.safe==="yt"){const bw=W*.11,bh=H*.075;ctx.strokeRect(W-bw-W*.02,H-bh-H*.03,bw,bh);}
+  if(ratio.safe==="igsquare"){const s=W,top=(H-s)/2;ctx.strokeRect(0,top,s,s);}
+  if(ratio.safe==="story"){ctx.fillStyle="rgba(255,0,0,.10)";
+    ctx.fillRect(0,0,W,H*.13);ctx.fillRect(0,H*.82,W,H*.18);ctx.strokeRect(0,H*.13,W,H*.69);}
   ctx.restore();
 }
 function ph(){
@@ -357,29 +380,144 @@ function ph(){
 }
 
 /* ---------- actual size preview ---------- */
-let pvTimer=null;
+let pvT=null;
 function syncPv(){
-  clearTimeout(pvTimer);
-  pvTimer=setTimeout(()=>{
+  clearTimeout(pvT);
+  pvT=setTimeout(()=>{
+    const wasExp=exporting;exporting=true;
+    const keepSafe=$("cSafe").checked;$("cSafe").checked=false;
+    drawClean();
     const url=cv.toDataURL("image/png");
+    $("cSafe").checked=keepSafe;exporting=wasExp;
     const r=cv.height/cv.width;
     [["pv1","c1",ratio.small],["pv2","c2",ratio.mid]].forEach(([i,c,w])=>{
       const el=$(i);el.src=url;el.style.width=w+"px";el.style.height=Math.round(w*r)+"px";
       $(c).textContent=w+"px";
     });
-  },90);
+    exporting=false;render0();
+  },110);
+}
+function drawClean(){
+  const W=cv.width,H=cv.height;
+  ctx.clearRect(0,0,W,H);ctx.fillStyle="#1b1e23";ctx.fillRect(0,0,W,H);
+  if(!img){ph();return;}
+  photo();shade();
+  ["tag","sub","main"].forEach(drawBlock);
+  if($("cMask").checked){
+    ctx.save();ctx.beginPath();
+    ctx.ellipse(mask.x*W,mask.y*H,W*(+$("sMaskW").value/100)/2,H*(+$("sMaskH").value/100)/2,0,0,Math.PI*2);
+    ctx.clip();photo();shade();ctx.restore();
+  }
+}
+function render0(){ // redraw with guides, no preview refresh
+  const W=cv.width,H=cv.height;
+  ctx.clearRect(0,0,W,H);ctx.fillStyle="#1b1e23";ctx.fillRect(0,0,W,H);
+  if(!img){ph();return;}
+  photo();shade();
+  boxes=[];["tag","sub","main"].forEach(k=>{const b=drawBlock(k);if(b)boxes.push(b);});
+  if($("cMask").checked){
+    ctx.save();ctx.beginPath();
+    ctx.ellipse(mask.x*W,mask.y*H,W*(+$("sMaskW").value/100)/2,H*(+$("sMaskH").value/100)/2,0,0,Math.PI*2);
+    ctx.clip();photo();shade();ctx.restore();
+  }
+  if($("cSafe").checked)safe();
+  guides();
 }
 
-/* ---------- ui ---------- */
+/* ---------- panel ---------- */
+function buildBlocks(){
+  const host=$("blocks");host.innerHTML="";
+  BLOCKS.forEach(meta=>{
+    const b=state[meta.key];
+    const el=document.createElement("div");
+    el.className="block"+(b.open?" open":"")+(sel===meta.key?" sel":"");
+    const opts=FONTS.map(f=>`<option value="${f.id}"${f.id===b.font?" selected":""}>${f.nm}</option>`).join("");
+    el.innerHTML=`
+      <header data-act="toggleopen">
+        <input type="checkbox" data-act="on" ${b.on?"checked":""} aria-label="${meta.nm}を表示">
+        <b>${meta.nm}</b><span class="tag">${meta.tag}</span>
+      </header>
+      <div class="body">
+        ${meta.key==="main"
+          ? `<div class="field"><label>文言<span class="count" data-count>0</span></label><textarea rows="2" data-act="text">${b.text}</textarea></div>`
+          : `<div class="field"><label>文言<span class="count" data-count>0</span></label><input type="text" data-act="text" value="${b.text.replace(/"/g,"&quot;")}"></div>`}
+        <div class="field duo">
+          <select data-act="font">${opts}</select>
+          <select data-act="weight">
+            <option value="400"${b.weight==400?" selected":""}>細</option>
+            <option value="700"${b.weight==700?" selected":""}>中</option>
+            <option value="900"${b.weight==900?" selected":""}>太</option>
+          </select>
+        </div>
+        <div class="field trio">
+          <select data-act="color">
+            <option value="white"${b.color==="white"?" selected":""}>白</option>
+            <option value="black"${b.color==="black"?" selected":""}>黒</option>
+            <option value="accent"${b.color==="accent"?" selected":""}>アクセント</option>
+          </select>
+          <select data-act="vert"${meta.key==="tag"?" disabled":""}>
+            <option value="0"${!b.vert?" selected":""}>横書き</option>
+            <option value="1"${b.vert?" selected":""}>縦書き</option>
+          </select>
+          <select data-act="align"${b.vert?" disabled":""}>
+            <option value="left"${b.align==="left"?" selected":""}>左揃え</option>
+            <option value="center"${b.align==="center"?" selected":""}>中央</option>
+            <option value="right"${b.align==="right"?" selected":""}>右揃え</option>
+          </select>
+        </div>
+        <div class="slider"><label>大きさ</label><input type="range" data-act="size" min="40" max="220" value="${b.size}"><span class="val" data-val>${b.size}</span></div>
+        <div class="place">
+          <button data-pos="tl">左上</button><button data-pos="tc">上中</button><button data-pos="tr">右上</button>
+          <button data-pos="bl">左下</button><button data-pos="bc">下中</button><button data-pos="br">右下</button>
+        </div>
+      </div>`;
+    el.querySelector("header").onclick=e=>{
+      if(e.target.dataset.act==="on")return;
+      b.open=!b.open;sel=meta.key;buildBlocks();render();
+    };
+    el.querySelectorAll("[data-act]").forEach(node=>{
+      const act=node.dataset.act;
+      if(act==="toggleopen")return;
+      const ev=node.tagName==="SELECT"?"change":"input";
+      node.addEventListener(ev,()=>{
+        sel=meta.key;
+        if(act==="on"){b.on=node.checked;}
+        else if(act==="text"){b.text=node.value;updCount(el,b);}
+        else if(act==="font"){b.font=node.value;loadFont(b);}
+        else if(act==="weight"){b.weight=+node.value;loadFont(b);}
+        else if(act==="color"){b.color=node.value;}
+        else if(act==="vert"){b.vert=node.value==="1";buildBlocks();}
+        else if(act==="align"){b.align=node.value;}
+        else if(act==="size"){b.size=+node.value;el.querySelector("[data-val]").textContent=b.size;}
+        render();
+      });
+    });
+    el.querySelectorAll("[data-pos]").forEach(btn=>{
+      btn.onclick=()=>{
+        const p=btn.dataset.pos,m=.07;
+        b.x=p[1]==="l"?m:p[1]==="c"?.34:.62;
+        b.y=p[0]==="t"?m:.68;
+        sel=meta.key;render();
+      };
+    });
+    updCount(el,b);
+    host.appendChild(el);
+  });
+}
+function updCount(el,b){
+  const n=b.text.replace(/\n/g,"").length,c=el.querySelector("[data-count]");
+  if(!c)return;c.textContent=n;c.className="count"+(n>(b===state.main?12:22)?" over":"");
+}
+function loadFont(b){
+  const fo=fontOf(b.font);
+  if(document.fonts&&document.fonts.load)
+    document.fonts.load(`${b.weight} 100px ${fo.f.split(",")[0]}`).then(()=>render()).catch(()=>{});
+}
 function segs(){
   const r=$("ratios");r.innerHTML="";
   RATIOS.forEach(x=>{const b=document.createElement("button");
     b.innerHTML=`${x.nm}<small>${x.sub}</small>`;b.setAttribute("aria-pressed",x.id===ratio.id);
     b.onclick=()=>{ratio=x;cv.width=x.w;cv.height=x.h;segs();render();};r.appendChild(b);});
-  const l=$("layouts");l.innerHTML="";
-  LAYOUTS.forEach(x=>{const b=document.createElement("button");
-    b.innerHTML=`${x.nm}<small>${x.ds}</small>`;b.setAttribute("aria-pressed",x.id===layout.id);
-    b.onclick=()=>{layout=x;segs();render();};l.appendChild(b);});
 }
 function paintChips(){
   const box=$("chips");box.innerHTML="";
@@ -389,63 +527,91 @@ function paintChips(){
     b.setAttribute("aria-pressed",h===accent);
     b.onclick=()=>{accent=h;paintChips();checkContrast();render();};box.appendChild(b);});
 }
-function paintPresets(){
+function paintSuggest(ranked){
   const box=$("presets");box.innerHTML="";
-  (ranked.length?ranked:TYPES).forEach((p,i)=>{
-    const b=document.createElement("button");b.className="preset";
-    b.setAttribute("aria-pressed",type.id===p.id);
-    b.innerHTML=`<span class="rk">${i+1}</span><span>${p.nm}<span class="ds">${p.ds}</span></span>`;
-    b.onclick=()=>{type=p;paintPresets();render();};box.appendChild(b);});
+  (ranked||SUGGEST).forEach((p,i)=>{
+    const b=document.createElement("button");
+    b.innerHTML=`${p.nm}<small>${p.ds}</small>`;
+    b.onclick=()=>{
+      state.main.font=p.main;state.main.weight=p.mw;
+      state.sub.font=p.sub;state.sub.weight=p.sw;
+      state.tag.font=p.sub;state.tag.weight=p.sw;
+      buildBlocks();loadFont(state.main);loadFont(state.sub);render();
+    };
+    box.appendChild(b);
+  });
 }
 function checkContrast(){
   const box=$("contrast");
   if(!analysis){box.innerHTML="";return;}
-  const l=analysis.luma,e=analysis.edge;
-  let msg="",ok=false;
-  if(l>.68) msg="写真が明るい。白文字は飛ぶので「写真を沈める」を上げるか、下ベタ帯を使う。";
-  else if(e>.62) msg="ディテールが多い写真。文字の裏が騒がしいので、縁つきか帯を推奨。";
-  else {ok=true;msg="文字が乗りやすい写真。中央抜きでも成立する。";}
+  const l=analysis.luma,e=analysis.edge;let msg,ok=false;
+  if(l>.68)msg="写真が明るい。白文字は飛ぶので「下を沈める」を上げるか、文字色を黒に。";
+  else if(e>.62)msg="ディテールが多い写真。文字の裏が騒がしいので、縁つきを推奨。";
+  else{ok=true;msg="文字が乗りやすい写真。中央に置いても成立する。";}
   box.innerHTML=`<div class="warn${ok?" ok":""}">${msg}</div>`;
-}
-function counts(){
-  const m=$("tMain").value.replace(/\n/g,"").length,s=$("tSub").value.length;
-  $("cnMain").textContent=m;$("cnMain").className="count"+(m>12?" over":"");
-  $("cnSub").textContent=s;$("cnSub").className="count"+(s>22?" over":"");
 }
 function load(f){
   if(!f||!f.type.startsWith("image/"))return;
   const url=URL.createObjectURL(f),im=new Image();
   im.onload=()=>{img=im;analysis=analyze(im);accent=pickAccent(analysis.palette);
-    ranked=[...TYPES].sort((a,b)=>b.score(analysis)-a.score(analysis));type=ranked[0];
-    paintChips();paintPresets();checkContrast();render();URL.revokeObjectURL(url);};
+    const ranked=[...SUGGEST].sort((a,b)=>b.score(analysis)-a.score(analysis));
+    paintChips();paintSuggest(ranked);checkContrast();render();URL.revokeObjectURL(url);};
   im.src=url;
 }
+
+/* ---------- interaction ---------- */
 $("drop").onclick=()=>$("file").click();
 $("file").onchange=e=>load(e.target.files[0]);
 ["dragover","dragenter"].forEach(ev=>$("drop").addEventListener(ev,e=>e.preventDefault()));
 $("drop").addEventListener("drop",e=>{e.preventDefault();load(e.dataTransfer.files[0]);});
-["tMain","tSub","tTag"].forEach(i=>$(i).addEventListener("input",()=>{counts();render();}));
-["cMask","cEdge","cSafe"].forEach(i=>$(i).addEventListener("change",render));
-[["sType","vType"],["sDark","vDark"],["sZoom","vZoom"],["sMaskW","vMaskW"],["sMaskH","vMaskH"]]
+["cMask","cSafe"].forEach(i=>$(i).addEventListener("change",render));
+[["sDark","vDark"],["sDim","vDim"],["sMaskW","vMaskW"],["sMaskH","vMaskH"]]
   .forEach(([s,v])=>$(s).addEventListener("input",()=>{$(v).textContent=$(s).value;render();}));
+$("dmText").onclick=()=>setMode("text");
+$("dmMask").onclick=()=>setMode("mask");
+function setMode(m){dragMode=m;
+  $("dmText").setAttribute("aria-pressed",m==="text");
+  $("dmMask").setAttribute("aria-pressed",m==="mask");render();}
 
-let drag=false;
-const loc=e=>{const r=cv.getBoundingClientRect();return{x:(e.clientX-r.left)/r.width,y:(e.clientY-r.top)/r.height};};
-cv.addEventListener("pointerdown",e=>{drag=true;cv.setPointerCapture(e.pointerId);mask=loc(e);render();});
-cv.addEventListener("pointermove",e=>{if(drag){e.preventDefault();mask=loc(e);render();}});
-["pointerup","pointercancel"].forEach(ev=>cv.addEventListener(ev,()=>drag=false));
+const loc=e=>{const r=cv.getBoundingClientRect();
+  return{x:(e.clientX-r.left)/r.width*cv.width,y:(e.clientY-r.top)/r.height*cv.height};};
+cv.addEventListener("pointerdown",e=>{
+  cv.setPointerCapture(e.pointerId);cv.classList.add("grabbing");
+  const p=loc(e);
+  if(dragMode==="mask"){drag={mask:true};mask={x:p.x/cv.width,y:p.y/cv.height};render();return;}
+  const pad=cv.width*.02;
+  const hit=[...boxes].reverse().find(b=>p.x>=b.x-pad&&p.x<=b.x+b.w+pad&&p.y>=b.y-pad&&p.y<=b.y+b.h+pad);
+  if(hit){sel=hit.key;drag={key:hit.key,dx:p.x-hit.x,dy:p.y-hit.y};
+    Object.keys(state).forEach(k=>state[k].open=(k===hit.key));buildBlocks();render();}
+});
+cv.addEventListener("pointermove",e=>{
+  if(!drag)return;e.preventDefault();const p=loc(e);
+  if(drag.mask)mask={x:p.x/cv.width,y:p.y/cv.height};
+  else{const b=state[drag.key];b.x=(p.x-drag.dx)/cv.width;b.y=(p.y-drag.dy)/cv.height;}
+  render0();
+});
+["pointerup","pointercancel"].forEach(ev=>cv.addEventListener(ev,()=>{
+  if(drag){drag=null;render();}cv.classList.remove("grabbing");}));
 
 $("save").onclick=()=>{
-  const safeOn=$("cSafe").checked;
-  if(safeOn){$("cSafe").checked=false;render();}
+  exporting=true;drawClean();
   cv.toBlob(b=>{const a=document.createElement("a");a.href=URL.createObjectURL(b);
     a.download=`thumb-${ratio.id}-${Date.now()}.png`;a.click();
     setTimeout(()=>URL.revokeObjectURL(a.href),2000);
-    if(safeOn){$("cSafe").checked=true;render();}
-  },"image/png");
+    exporting=false;render();},"image/png");
 };
 
-segs();paintPresets();counts();
+/* hidden control kept for stroke toggle */
+const edge=document.createElement("input");
+edge.type="checkbox";edge.id="cEdge";edge.checked=true;edge.hidden=true;
+document.body.appendChild(edge);
+const edgeLabel=document.createElement("label");
+edgeLabel.className="toggle";
+edgeLabel.innerHTML='<input type="checkbox" id="cEdgeUI" checked>文字に縁をつける';
+$("maskHint").before(edgeLabel);
+$("cEdgeUI").addEventListener("change",e=>{edge.checked=e.target.checked;render();});
+
+segs();buildBlocks();paintSuggest();
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(render);
 render();
 })();
