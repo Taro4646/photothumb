@@ -14,7 +14,8 @@
 <link rel="apple-touch-icon" href="./icons/icon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Black&family=Bebas+Neue&family=Bodoni+Moda:wght@400;700;900&family=Cormorant+Garamond:wght@300;500;700&family=DM+Serif+Display&family=Dela+Gothic+One&family=Hina+Mincho&family=Kaisei+Decol:wght@400;700&family=Klee+One:wght@400;600&family=Libre+Baskerville:wght@400;700&family=Montserrat:wght@400;700;900&family=Noto+Sans+JP:wght@400;700;900&family=Noto+Serif+JP:wght@400;700;900&family=Oswald:wght@400;700&family=Playfair+Display:wght@400;700;900&family=RocknRoll+One&family=Shippori+Mincho:wght@400;600;800&family=Space+Grotesk:wght@400;700&family=Syne:wght@400;700;800&family=Yuji+Syuku&family=Zen+Kaku+Gothic+New:wght@400;700;900&family=Zen+Maru+Gothic:wght@400;700;900&family=Zen+Old+Mincho:wght@400;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Biz+UDPMincho&family=BIZ+UDPGothic&family=Dela+Gothic+One&family=DotGothic16&family=Hachi+Maru+Pop&family=Hina+Mincho&family=Kaisei+Decol:wght@400;700&family=Kaisei+Opti:wght@400;700&family=Kaisei+Tokumin:wght@400;700;800&family=Klee+One:wght@400;600&family=Kosugi+Maru&family=M+PLUS+1p:wght@400;700;800&family=M+PLUS+Rounded+1c:wght@400;700;800&family=Mochiy+Pop+One&family=Murecho:wght@400;700;900&family=New+Tegomin&family=Noto+Sans+JP:wght@400;700;900&family=Noto+Serif+JP:wght@400;700;900&family=Potta+One&family=Rampart+One&family=Reggae+One&family=RocknRoll+One&family=Sawarabi+Gothic&family=Sawarabi+Mincho&family=Shippori+Antique&family=Shippori+Mincho:wght@400;600;800&family=Shippori+Mincho+B1:wght@400;600;800&family=Stick&family=Train+One&family=Yuji+Boku&family=Yuji+Mai&family=Yuji+Syuku&family=Yusei+Magic&family=Zen+Antique&family=Zen+Antique+Soft&family=Zen+Kaku+Gothic+Antique:wght@400;700;900&family=Zen+Kaku+Gothic+New:wght@400;700;900&family=Zen+Maru+Gothic:wght@400;700;900&family=Zen+Old+Mincho:wght@400;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Alfa+Slab+One&family=Anton&family=Archivo+Black&family=Barlow+Condensed:wght@400;700;900&family=Bebas+Neue&family=Bodoni+Moda:wght@400;700;900&family=Chivo:wght@400;700;900&family=Cinzel:wght@400;700;900&family=Cormorant+Garamond:wght@300;500;700&family=DM+Serif+Display&family=EB+Garamond:wght@400;700;800&family=Fjalla+One&family=Instrument+Serif&family=Inter:wght@400;700;900&family=Italiana&family=Josefin+Sans:wght@400;700&family=Libre+Baskerville:wght@400;700&family=Lora:wght@400;700&family=Marcellus&family=Montserrat:wght@400;700;900&family=Oswald:wght@400;700&family=Playfair+Display:wght@400;700;900&family=Poppins:wght@400;700;900&family=Raleway:wght@400;700;900&family=Righteous&family=Space+Grotesk:wght@400;700&family=Syne:wght@400;700;800&family=Teko:wght@400;700&family=Unbounded:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
   :root{
     --ink:#101216; --ink2:#191c22; --line:#292d35;
@@ -27,12 +28,14 @@
     font-family:"Noto Sans JP",-apple-system,BlinkMacSystemFont,sans-serif;
     -webkit-font-smoothing:antialiased;padding-bottom:env(safe-area-inset-bottom);
   }
-  header{display:flex;align-items:baseline;gap:11px;
-    padding:calc(13px + env(safe-area-inset-top)) 18px 13px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--ink);z-index:9}
+  header{display:block;width:100%;text-align:center;
+    padding:calc(13px + env(safe-area-inset-top)) 18px 13px;border-bottom:1px solid var(--line);
+    position:sticky;top:0;left:0;background:var(--ink);z-index:9}
   header h1{font-family:"Archivo Black",sans-serif;font-size:16px;margin:0;letter-spacing:-.01em}
-  header em{font-family:"Shippori Mincho",serif;font-size:10px;color:var(--muted);letter-spacing:.32em;font-style:normal}
+  
 
-  .wrap{display:grid;grid-template-columns:minmax(0,1fr) 390px}
+  html{overflow-x:hidden}
+  .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,390px)}
   @media(max-width:960px){.wrap{grid-template-columns:1fr}}
 
   .stage{padding:20px 18px 44px;display:flex;flex-direction:column;align-items:center;gap:16px;background:repeating-linear-gradient(45deg,#15181d 0 9px,#131519 9px 18px)}
@@ -102,7 +105,7 @@
 </head>
 <body>
 
-<header><h1>THUMB FORGE</h1><em>寸 法 検 証 付</em></header>
+<header><h1>THUMB FORGE</h1></header>
 
 <div class="wrap">
   <div class="stage">
@@ -170,7 +173,20 @@
       <p class="hint" id="maskHint">切り抜きは楕円。位置はドラッグ対象を「切り抜き」に切り替えて動かします。</p>
     </section>
 
-    <section><button class="primary" id="save">PNGで書き出す</button></section>
+    <section>
+      <h2>Export</h2>
+      <div class="field">
+        <label for="fmt">形式</label>
+        <select id="fmt">
+          <option value="png">PNG — 劣化なし・容量大</option>
+          <option value="jpeg">JPEG — 軽い・写真向き</option>
+        </select>
+      </div>
+      <div class="slider" id="qRow" hidden><label for="sQ">画質</label><input type="range" id="sQ" min="60" max="100" value="92"><span class="val" id="vQ">92</span></div>
+      <button class="primary" id="share">写真アプリに保存 / 共有</button>
+      <button id="save" style="width:100%;margin-top:7px">ファイルとしてダウンロード</button>
+      <p class="hint" id="exHint">iPhone では共有シートが開くので「画像を保存」を選ぶと写真アプリに入ります。</p>
+    </section>
   </div>
 </div>
 
@@ -187,30 +203,81 @@ const RATIOS=[
  {id:"yt",nm:"YouTube",sub:"16:9",w:1280,h:720,small:168,mid:246,safe:"yt"}
 ];
 const FONTS=[
- {id:"zenold", nm:"Zen Old Mincho（明朝）", f:'"Zen Old Mincho", serif', jp:1},
- {id:"shippori",nm:"しっぽり明朝", f:'"Shippori Mincho", serif', jp:1},
- {id:"notoserifjp",nm:"Noto Serif JP（明朝）", f:'"Noto Serif JP", serif', jp:1},
- {id:"hina", nm:"ひな明朝（細）", f:'"Hina Mincho", serif', jp:1},
- {id:"yuji", nm:"Yuji Syuku（筆）", f:'"Yuji Syuku", serif', jp:1},
- {id:"klee", nm:"Klee One（手書き）", f:'"Klee One", serif', jp:1},
- {id:"notosansjp",nm:"Noto Sans JP（ゴシック）", f:'"Noto Sans JP", sans-serif', jp:1},
- {id:"zenkaku",nm:"Zen角ゴシック", f:'"Zen Kaku Gothic New", sans-serif', jp:1},
- {id:"zenmaru",nm:"Zen丸ゴシック", f:'"Zen Maru Gothic", sans-serif', jp:1},
- {id:"dela", nm:"Dela Gothic One（極太）", f:'"Dela Gothic One", sans-serif', jp:1},
- {id:"kaisei",nm:"Kaisei Decol（丸み）", f:'"Kaisei Decol", serif', jp:1},
- {id:"rocknroll",nm:"RocknRoll One", f:'"RocknRoll One", sans-serif', jp:1},
- {id:"anton", nm:"Anton（欧文・極太）", f:'"Anton", sans-serif'},
- {id:"archivo",nm:"Archivo Black（欧文）", f:'"Archivo Black", sans-serif'},
- {id:"bebas", nm:"Bebas Neue（欧文・縦長）", f:'"Bebas Neue", sans-serif'},
- {id:"oswald",nm:"Oswald（欧文）", f:'"Oswald", sans-serif'},
- {id:"montserrat",nm:"Montserrat（欧文）", f:'"Montserrat", sans-serif'},
- {id:"space", nm:"Space Grotesk（欧文）", f:'"Space Grotesk", sans-serif'},
- {id:"syne", nm:"Syne（欧文・癖）", f:'"Syne", sans-serif'},
- {id:"bodoni",nm:"Bodoni Moda（欧文・雑誌）", f:'"Bodoni Moda", serif'},
- {id:"playfair",nm:"Playfair Display（欧文）", f:'"Playfair Display", serif'},
- {id:"dmserif",nm:"DM Serif Display（欧文）", f:'"DM Serif Display", serif'},
- {id:"cormorant",nm:"Cormorant（欧文・細）", f:'"Cormorant Garamond", serif'},
- {id:"baskerville",nm:"Libre Baskerville（欧文）", f:'"Libre Baskerville", serif'}
+ // 和文・明朝
+ {g:"和文 明朝", id:"zenold",     nm:"Zen Old Mincho",      f:'"Zen Old Mincho", serif'},
+ {g:"和文 明朝", id:"shippori",   nm:"しっぽり明朝",         f:'"Shippori Mincho", serif'},
+ {g:"和文 明朝", id:"shipporib1", nm:"しっぽり明朝 B1",      f:'"Shippori Mincho B1", serif'},
+ {g:"和文 明朝", id:"notoserifjp",nm:"Noto Serif JP",       f:'"Noto Serif JP", serif'},
+ {g:"和文 明朝", id:"bizmincho",  nm:"BIZ UDP明朝",          f:'"BIZ UDPMincho", serif'},
+ {g:"和文 明朝", id:"sawamin",    nm:"さわらび明朝",         f:'"Sawarabi Mincho", serif'},
+ {g:"和文 明朝", id:"hina",       nm:"ひな明朝（極細）",      f:'"Hina Mincho", serif'},
+ {g:"和文 明朝", id:"tegomin",    nm:"New Tegomin（古風）",  f:'"New Tegomin", serif'},
+ {g:"和文 明朝", id:"kaiseitoku", nm:"Kaisei Tokumin",      f:'"Kaisei Tokumin", serif'},
+ {g:"和文 明朝", id:"kaiseiopti", nm:"Kaisei Opti",         f:'"Kaisei Opti", serif'},
+ {g:"和文 明朝", id:"kaisei",     nm:"Kaisei Decol",        f:'"Kaisei Decol", serif'},
+ {g:"和文 明朝", id:"zenantique", nm:"Zen Antique",         f:'"Zen Antique", serif'},
+ {g:"和文 明朝", id:"zenantiques",nm:"Zen Antique Soft",    f:'"Zen Antique Soft", serif'},
+ {g:"和文 明朝", id:"shipant",    nm:"しっぽりアンティーク",  f:'"Shippori Antique", sans-serif'},
+ // 和文・ゴシック
+ {g:"和文 ゴシック", id:"notosansjp", nm:"Noto Sans JP",     f:'"Noto Sans JP", sans-serif'},
+ {g:"和文 ゴシック", id:"zenkaku",    nm:"Zen角ゴシック New", f:'"Zen Kaku Gothic New", sans-serif'},
+ {g:"和文 ゴシック", id:"zenkakuant", nm:"Zen角ゴ Antique",   f:'"Zen Kaku Gothic Antique", sans-serif'},
+ {g:"和文 ゴシック", id:"bizgothic",  nm:"BIZ UDPゴシック",   f:'"BIZ UDPGothic", sans-serif'},
+ {g:"和文 ゴシック", id:"murecho",    nm:"Murecho",          f:'"Murecho", sans-serif'},
+ {g:"和文 ゴシック", id:"mplus1p",    nm:"M PLUS 1p",        f:'"M PLUS 1p", sans-serif'},
+ {g:"和文 ゴシック", id:"sawagoth",   nm:"さわらびゴシック",   f:'"Sawarabi Gothic", sans-serif'},
+ {g:"和文 ゴシック", id:"zenmaru",    nm:"Zen丸ゴシック",     f:'"Zen Maru Gothic", sans-serif'},
+ {g:"和文 ゴシック", id:"mplusround", nm:"M PLUS Rounded 1c", f:'"M PLUS Rounded 1c", sans-serif'},
+ {g:"和文 ゴシック", id:"kosugimaru", nm:"小杉丸",            f:'"Kosugi Maru", sans-serif'},
+ // 和文・デザイン
+ {g:"和文 デザイン", id:"dela",     nm:"Dela Gothic One（極太）", f:'"Dela Gothic One", sans-serif'},
+ {g:"和文 デザイン", id:"rampart",  nm:"Rampart One（立体）",     f:'"Rampart One", sans-serif'},
+ {g:"和文 デザイン", id:"reggae",   nm:"Reggae One",             f:'"Reggae One", sans-serif'},
+ {g:"和文 デザイン", id:"train",    nm:"Train One",              f:'"Train One", sans-serif'},
+ {g:"和文 デザイン", id:"stick",    nm:"Stick",                  f:'"Stick", sans-serif'},
+ {g:"和文 デザイン", id:"dot",      nm:"DotGothic16（ドット）",   f:'"DotGothic16", sans-serif'},
+ {g:"和文 デザイン", id:"rocknroll",nm:"RocknRoll One",          f:'"RocknRoll One", sans-serif'},
+ {g:"和文 デザイン", id:"potta",    nm:"Potta One",              f:'"Potta One", serif'},
+ {g:"和文 デザイン", id:"yusei",    nm:"Yusei Magic（手書き）",   f:'"Yusei Magic", sans-serif'},
+ {g:"和文 デザイン", id:"klee",     nm:"Klee One（硬筆）",        f:'"Klee One", serif'},
+ {g:"和文 デザイン", id:"yujisyuku",nm:"Yuji Syuku（筆）",        f:'"Yuji Syuku", serif'},
+ {g:"和文 デザイン", id:"yujiboku", nm:"Yuji Boku（筆・太）",     f:'"Yuji Boku", serif'},
+ {g:"和文 デザイン", id:"yujimai",  nm:"Yuji Mai（筆・流麗）",    f:'"Yuji Mai", serif'},
+ {g:"和文 デザイン", id:"mochiy",   nm:"Mochiy Pop One",         f:'"Mochiy Pop One", sans-serif'},
+ {g:"和文 デザイン", id:"hachi",    nm:"Hachi Maru Pop",         f:'"Hachi Maru Pop", cursive'},
+ // 欧文・サンセリフ
+ {g:"欧文 サンセリフ", id:"anton",   nm:"Anton（極太）",        f:'"Anton", sans-serif'},
+ {g:"欧文 サンセリフ", id:"archivo", nm:"Archivo Black",       f:'"Archivo Black", sans-serif'},
+ {g:"欧文 サンセリフ", id:"bebas",   nm:"Bebas Neue（縦長）",   f:'"Bebas Neue", sans-serif'},
+ {g:"欧文 サンセリフ", id:"oswald",  nm:"Oswald",              f:'"Oswald", sans-serif'},
+ {g:"欧文 サンセリフ", id:"fjalla",  nm:"Fjalla One",          f:'"Fjalla One", sans-serif'},
+ {g:"欧文 サンセリフ", id:"barlowc", nm:"Barlow Condensed",    f:'"Barlow Condensed", sans-serif'},
+ {g:"欧文 サンセリフ", id:"teko",    nm:"Teko（細長）",         f:'"Teko", sans-serif'},
+ {g:"欧文 サンセリフ", id:"montserrat",nm:"Montserrat",        f:'"Montserrat", sans-serif'},
+ {g:"欧文 サンセリフ", id:"inter",   nm:"Inter",               f:'"Inter", sans-serif'},
+ {g:"欧文 サンセリフ", id:"poppins", nm:"Poppins",             f:'"Poppins", sans-serif'},
+ {g:"欧文 サンセリフ", id:"raleway", nm:"Raleway",             f:'"Raleway", sans-serif'},
+ {g:"欧文 サンセリフ", id:"josefin", nm:"Josefin Sans",        f:'"Josefin Sans", sans-serif'},
+ {g:"欧文 サンセリフ", id:"space",   nm:"Space Grotesk",       f:'"Space Grotesk", sans-serif'},
+ {g:"欧文 サンセリフ", id:"chivo",   nm:"Chivo",               f:'"Chivo", sans-serif'},
+ // 欧文・セリフ
+ {g:"欧文 セリフ", id:"bodoni",     nm:"Bodoni Moda（雑誌）",  f:'"Bodoni Moda", serif'},
+ {g:"欧文 セリフ", id:"playfair",   nm:"Playfair Display",    f:'"Playfair Display", serif'},
+ {g:"欧文 セリフ", id:"dmserif",    nm:"DM Serif Display",    f:'"DM Serif Display", serif'},
+ {g:"欧文 セリフ", id:"instrument", nm:"Instrument Serif",    f:'"Instrument Serif", serif'},
+ {g:"欧文 セリフ", id:"cormorant",  nm:"Cormorant（細）",      f:'"Cormorant Garamond", serif'},
+ {g:"欧文 セリフ", id:"ebgaramond", nm:"EB Garamond",         f:'"EB Garamond", serif'},
+ {g:"欧文 セリフ", id:"baskerville",nm:"Libre Baskerville",   f:'"Libre Baskerville", serif'},
+ {g:"欧文 セリフ", id:"lora",       nm:"Lora",                f:'"Lora", serif'},
+ {g:"欧文 セリフ", id:"cinzel",     nm:"Cinzel（碑文）",       f:'"Cinzel", serif'},
+ {g:"欧文 セリフ", id:"marcellus",  nm:"Marcellus",           f:'"Marcellus", serif'},
+ {g:"欧文 セリフ", id:"italiana",   nm:"Italiana（優美）",     f:'"Italiana", serif'},
+ // 欧文・ディスプレイ
+ {g:"欧文 ディスプレイ", id:"abril", nm:"Abril Fatface",       f:'"Abril Fatface", serif'},
+ {g:"欧文 ディスプレイ", id:"alfa",  nm:"Alfa Slab One",       f:'"Alfa Slab One", serif'},
+ {g:"欧文 ディスプレイ", id:"syne",  nm:"Syne（癖）",           f:'"Syne", sans-serif'},
+ {g:"欧文 ディスプレイ", id:"unbounded",nm:"Unbounded",        f:'"Unbounded", sans-serif'},
+ {g:"欧文 ディスプレイ", id:"righteous",nm:"Righteous",        f:'"Righteous", sans-serif'}
 ];
 const fontOf=id=>FONTS.find(f=>f.id===id)||FONTS[0];
 
@@ -240,7 +307,7 @@ const frame={mode:"cover",fill:"blur",margin:0,rule:false};
 let pRect={x:0,y:0,w:0,h:0};
 const blurOK=(()=>{const c=document.createElement("canvas").getContext("2d");c.filter="blur(2px)";return c.filter==="blur(2px)";})();
 let mask={x:.5,y:.42},dragMode="text",sel="main",exporting=false;
-let boxes=[],drag=null;
+let boxes=[],drag=null,snap={v:false,h:false};
 
 /* ---------- analysis ---------- */
 function analyze(im){
@@ -417,6 +484,15 @@ function guides(){
     ctx.strokeStyle=b.key===sel?"rgba(255,77,46,.9)":"rgba(255,255,255,.22)";
     ctx.strokeRect(b.x-W*.008,b.y-W*.008,b.w+W*.016,b.h+W*.016);
   });
+  if(snap.v||snap.h){
+    ctx.setLineDash([]);ctx.strokeStyle="rgba(255,77,46,.95)";
+    ctx.lineWidth=Math.max(2,W*.0035);
+    ctx.beginPath();
+    if(snap.v){ctx.moveTo(W/2,0);ctx.lineTo(W/2,cv.height);}
+    if(snap.h){ctx.moveTo(0,cv.height/2);ctx.lineTo(W,cv.height/2);}
+    ctx.stroke();
+    ctx.setLineDash([W*.008,W*.008]);
+  }
   if(dragMode==="mask"&&$("cMask").checked){
     ctx.strokeStyle="rgba(255,77,46,.9)";ctx.beginPath();
     ctx.ellipse(mask.x*W,mask.y*cv.height,W*(+$("sMaskW").value/100)/2,cv.height*(+$("sMaskH").value/100)/2,0,0,Math.PI*2);
@@ -494,7 +570,12 @@ function buildBlocks(){
     const b=state[meta.key];
     const el=document.createElement("div");
     el.className="block"+(b.open?" open":"")+(sel===meta.key?" sel":"");
-    const opts=FONTS.map(f=>`<option value="${f.id}"${f.id===b.font?" selected":""}>${f.nm}</option>`).join("");
+    let opts="",grp="";
+    FONTS.forEach(f=>{
+      if(f.g!==grp){if(grp)opts+="</optgroup>";opts+=`<optgroup label="${f.g}">`;grp=f.g;}
+      opts+=`<option value="${f.id}"${f.id===b.font?" selected":""}>${f.nm}</option>`;
+    });
+    if(grp)opts+="</optgroup>";
     el.innerHTML=`
       <header data-act="toggleopen">
         <input type="checkbox" data-act="on" ${b.on?"checked":""} aria-label="${meta.nm}を表示">
@@ -656,24 +737,70 @@ cv.addEventListener("pointerdown",e=>{
   if(dragMode==="mask"){drag={mask:true};mask={x:p.x/cv.width,y:p.y/cv.height};render();return;}
   const pad=cv.width*.02;
   const hit=[...boxes].reverse().find(b=>p.x>=b.x-pad&&p.x<=b.x+b.w+pad&&p.y>=b.y-pad&&p.y<=b.y+b.h+pad);
-  if(hit){sel=hit.key;drag={key:hit.key,dx:p.x-hit.x,dy:p.y-hit.y};
+  if(hit){sel=hit.key;drag={key:hit.key,dx:p.x-hit.x,dy:p.y-hit.y,bw:hit.w,bh:hit.h};
     Object.keys(state).forEach(k=>state[k].open=(k===hit.key));buildBlocks();render();}
 });
 cv.addEventListener("pointermove",e=>{
   if(!drag)return;e.preventDefault();const p=loc(e);
-  if(drag.mask)mask={x:p.x/cv.width,y:p.y/cv.height};
-  else{const b=state[drag.key];b.x=(p.x-drag.dx)/cv.width;b.y=(p.y-drag.dy)/cv.height;}
+  const W=cv.width,H=cv.height;
+  if(drag.mask){
+    let mx=p.x,my=p.y;snap.v=snap.h=false;
+    const t=Math.min(W,H)*.018;
+    if(Math.abs(mx-W/2)<t){mx=W/2;snap.v=true;}
+    if(Math.abs(my-H/2)<t){my=H/2;snap.h=true;}
+    mask={x:mx/W,y:my/H};
+  }else{
+    const b=state[drag.key];
+    let x=p.x-drag.dx,y=p.y-drag.dy;
+    const t=Math.min(W,H)*.018;
+    snap.v=snap.h=false;
+    if(Math.abs(x+drag.bw/2-W/2)<t){x=(W-drag.bw)/2;snap.v=true;}
+    if(Math.abs(y+drag.bh/2-H/2)<t){y=(H-drag.bh)/2;snap.h=true;}
+    b.x=x/W;b.y=y/H;
+  }
   render0();
 });
 ["pointerup","pointercancel"].forEach(ev=>cv.addEventListener(ev,()=>{
-  if(drag){drag=null;render();}cv.classList.remove("grabbing");}));
+  if(drag){drag=null;snap.v=snap.h=false;render();}cv.classList.remove("grabbing");}));
 
-$("save").onclick=()=>{
-  exporting=true;drawClean();
-  cv.toBlob(b=>{const a=document.createElement("a");a.href=URL.createObjectURL(b);
-    a.download=`thumb-${ratio.id}-${Date.now()}.png`;a.click();
-    setTimeout(()=>URL.revokeObjectURL(a.href),2000);
-    exporting=false;render();},"image/png");
+$("fmt").addEventListener("change",()=>{$("qRow").hidden=$("fmt").value!=="jpeg";});
+$("sQ").addEventListener("input",e=>$("vQ").textContent=e.target.value);
+const exHint=t=>$("exHint").textContent=t;
+
+function exportBlob(){
+  return new Promise(res=>{
+    const jpeg=$("fmt").value==="jpeg";
+    const type=jpeg?"image/jpeg":"image/png";
+    exporting=true;drawClean();
+    cv.toBlob(b=>{exporting=false;render();
+      res({blob:b,type,name:`thumb-${ratio.id}-${Date.now()}.${jpeg?"jpg":"png"}`});
+    },type,jpeg?+$("sQ").value/100:undefined);
+  });
+}
+function download(blob,name){
+  const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=name;a.click();
+  setTimeout(()=>URL.revokeObjectURL(a.href),2000);
+}
+$("save").onclick=async()=>{
+  const {blob,name}=await exportBlob();download(blob,name);
+  exHint(`${name} を書き出しました（${Math.round(blob.size/1024)}KB）。`);
+};
+$("share").onclick=async()=>{
+  const {blob,type,name}=await exportBlob();
+  try{
+    const file=new File([blob],name,{type});
+    if(navigator.canShare&&navigator.canShare({files:[file]})){
+      await navigator.share({files:[file]});
+      exHint("共有シートの「画像を保存」で写真アプリに入ります。");
+    }else{
+      download(blob,name);
+      exHint("この環境は共有に非対応のため、ダウンロードしました。iPhone の Safari で開くと写真アプリに直接保存できます。");
+    }
+  }catch(err){
+    if(err && err.name==="AbortError")return;
+    download(blob,name);
+    exHint("共有できなかったのでダウンロードしました。");
+  }
 };
 
 /* hidden control kept for stroke toggle */
