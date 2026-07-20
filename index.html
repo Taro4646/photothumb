@@ -28,33 +28,32 @@
     font-family:"Noto Sans JP",-apple-system,BlinkMacSystemFont,sans-serif;
     -webkit-font-smoothing:antialiased;padding-bottom:env(safe-area-inset-bottom);
   }
-  header{position:fixed;top:0;left:0;right:0;width:100vw;text-align:center;
+  header{position:fixed;top:0;left:0;right:0;text-align:center;
     padding:calc(13px + env(safe-area-inset-top)) 18px 13px;border-bottom:1px solid var(--line);
     background:var(--ink);z-index:20}
   #hspace{width:100%}
   header h1{font-family:"Archivo Black",sans-serif;font-size:16px;margin:0;letter-spacing:-.01em}
   
 
-  html,body{overflow-x:clip}
   .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,390px)}
   @media(max-width:960px){.wrap{grid-template-columns:1fr}}
 
-  .stage{padding:20px 18px 44px;display:flex;flex-direction:column;align-items:center;gap:16px;background:repeating-linear-gradient(45deg,#15181d 0 9px,#131519 9px 18px)}
+  .stage{min-width:0;max-width:100%;padding:20px 18px 44px;display:flex;flex-direction:column;align-items:center;gap:16px;background:repeating-linear-gradient(45deg,#15181d 0 9px,#131519 9px 18px)}
   #big{display:block;max-width:min(100%,420px);max-height:54vh;width:auto;height:auto;box-shadow:0 16px 44px rgba(0,0,0,.6);cursor:grab;touch-action:none;background:#222}
   #big.grabbing{cursor:grabbing}
-  .dragmode{display:flex;gap:6px;align-items:center;font-size:11px;color:var(--muted)}
+  .dragmode{display:flex;gap:6px;align-items:center;flex-wrap:wrap;justify-content:center;font-size:11px;color:var(--muted)}
   .dragmode button{padding:5px 10px;font-size:11px}
   .dragmode button[aria-pressed=true]{border-color:var(--hot);color:#fff}
 
-  .actual{padding:11px 18px 13px;border:1px solid var(--line);background:rgba(0,0,0,.35)}
+  .actual{max-width:100%;padding:11px 18px 13px;border:1px solid var(--line);background:rgba(0,0,0,.35)}
   .plabel{margin:0 0 10px;text-align:center;font-family:"Bodoni Moda",serif;font-size:10px;
     letter-spacing:.3em;color:var(--muted);text-transform:none}
-  .shots{display:flex;align-items:flex-end;justify-content:center;gap:16px}
+  .shots{display:flex;align-items:flex-end;justify-content:center;gap:16px;flex-wrap:wrap}
   .actual figure{margin:0;display:flex;flex-direction:column;align-items:center;gap:5px}
   .actual img{display:block;background:#222}
   .actual figcaption{font-family:"Bodoni Moda",serif;font-size:9px;color:var(--muted);letter-spacing:.14em}
 
-  .panel{border-left:1px solid var(--line);padding-bottom:64px}
+  .panel{min-width:0;max-width:100%;border-left:1px solid var(--line);padding-bottom:64px}
   @media(max-width:960px){.panel{border-left:0;border-top:1px solid var(--line)}}
   section{border-bottom:1px solid var(--line);padding:15px 18px}
   h2{font-family:"Bodoni Moda",serif;font-size:10px;font-weight:700;letter-spacing:.26em;text-transform:uppercase;color:var(--muted);margin:0 0 11px}
@@ -767,9 +766,11 @@ function syncPv(){
     const url=cv.toDataURL("image/png");
     $("cSafe").checked=keepSafe;exporting=wasExp;
     const r=cv.height/cv.width;
+    const room=Math.max(120,(document.querySelector(".actual")?.clientWidth||320)-36);
     [["pv1","c1",ratio.small],["pv2","c2",ratio.mid]].forEach(([i,c,w])=>{
-      const el=$(i);el.src=url;el.style.width=w+"px";el.style.height=Math.round(w*r)+"px";
-      $(c).textContent=w+"px";
+      const el=$(i),ww=Math.min(w,room);
+      el.src=url;el.style.width=ww+"px";el.style.height=Math.round(ww*r)+"px";
+      $(c).textContent=ww===w?`${w}px`:`${ww}px（実寸${w}px）`;
     });
     exporting=false;render0();
   },110);
