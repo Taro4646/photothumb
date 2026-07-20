@@ -433,12 +433,14 @@ function buildProposals(){
     const box=measure(cfg.font,cfg.weight,px,lines,cfg.track,cfg.vert);
     const p=place(la,box,cfg.filter)||{x:MARGIN,y:.66,st:{luma:a.luma,edge:a.edge},nm:"下左",bw:box.w/W,bh:box.h/H};
     const bg=p.st.luma;
-    const白=bg<.58;
-    const need=白?scrimFor(bg,4.5):0;
-    const dark=Math.round(Math.min(cfg.maxDark,Math.max(cfg.minDark,need*100)));
-    const eff=白?bg*(1-dark/100):bg;
-    const cr=白?ratioOf(1,eff):ratioOf(.03,eff);
-    return{lines,size,px,box,p,白,dark,cr};
+    // 白と黒の両方を、沈めの上限まで含めて計算し、実際に勝つほうを採る
+    const dW=Math.round(Math.min(cfg.maxDark,Math.max(cfg.minDark,scrimFor(bg,4.5)*100)));
+    const crW=ratioOf(1,bg*(1-dW/100));
+    const dB=cfg.minDark;
+    const crB=ratioOf(.03,bg*(1-dB/100));
+    const useWhite=crW>=crB;
+    const dark=useWhite?dW:dB, cr=useWhite?crW:crB;
+    return{lines,size,px,box,p,useWhite,dark,cr};
   };
 
   /* 案1 — 写真を主役にして、静かな余白に沿わせる */
@@ -449,13 +451,13 @@ function buildProposals(){
     out.push({
       nm:"余白に沿わせる",
       why:`配置は${r.p.nm}。この矩形の情報量 ${pct(r.p.st.edge)}／明るさ ${pct(r.p.st.luma)} で最も静か。`
-         +`文字は${r.白?"白":"黒"}、コントラスト ${r.cr.toFixed(1)}:1 を確保するため沈め ${r.dark}%。`
+         +`文字は${r.useWhite?"白":"黒"}、コントラスト ${r.cr.toFixed(1)}:1 を確保するため沈め ${r.dark}%。`
          +`級数は実寸 ${ratio.small}px で文字高 ${glyphPx("main",r.size)}px。写真を潰さない下限。`,
       spec:`${fontOf(jp).nm} ／ ${fontOf(ln).nm}`,
       apply(){
-        set("main",{text:r.lines.join("\n"),font:jp,weight:900,track:2,color:r.白?"white":"black",
+        set("main",{text:r.lines.join("\n"),font:jp,weight:900,track:2,color:r.useWhite?"white":"black",
                     vert:false,align:"left",size:r.size,x:r.p.x,y:r.p.y});
-        set("sub",{on:true,font:ln,weight:500,track:16,color:r.白?"white":"black",size:96,
+        set("sub",{on:true,font:ln,weight:500,track:16,color:r.useWhite?"white":"black",size:96,
                    x:r.p.x,y:Math.min(.94,r.p.y+r.p.bh+gap)});
         set("tag",{on:false});
         setUI({dark:r.dark,dim:0,mask:false,fit:"cover",margin:0,rule:false,edge:r.p.st.edge>.45});
@@ -502,8 +504,8 @@ function buildProposals(){
       spec:`${fontOf(jp).nm}（縦組み） ／ ${fontOf(ln).nm}`,
       apply(){
         set("main",{text:raw.replace(/\n/g,""),font:jp,weight:900,track:2,
-                    color:r.白?"white":"black",vert:true,size:r.size,x:r.p.x,y:r.p.y});
-        set("sub",{on:true,font:ln,weight:500,track:18,color:r.白?"white":"black",size:88,
+                    color:r.useWhite?"white":"black",vert:true,size:r.size,x:r.p.x,y:r.p.y});
+        set("sub",{on:true,font:ln,weight:500,track:18,color:r.useWhite?"white":"black",size:88,
                    x:MARGIN,y:.90});
         set("tag",{on:false});
         setUI({dark:r.dark,dim:0,mask:false,
@@ -756,16 +758,22 @@ function ph(){
 }
 
 /* ---------- actual size preview ---------- */
-let pvT=null;
+let pvT=null,pvC=null,pvX=null;
 function syncPv(){
   clearTimeout(pvT);
   pvT=setTimeout(()=>{
     const wasExp=exporting;exporting=true;
     const keepSafe=$("cSafe").checked;$("cSafe").checked=false;
     drawClean();
-    const url=cv.toDataURL("image/png");
-    $("cSafe").checked=keepSafe;exporting=wasExp;
     const r=cv.height/cv.width;
+    const pw=Math.max(ratio.small,ratio.mid)*2;      // 2倍で焼いて縮小表示（Retina対応）
+    if(!pvC){pvC=document.createElement("canvas");pvX=pvC.getContext("2d");}
+    pvC.width=pw;pvC.height=Math.round(pw*r);
+    pvX.imageSmoothingQuality="high";
+    pvX.clearRect(0,0,pvC.width,pvC.height);
+    pvX.drawImage(cv,0,0,pvC.width,pvC.height);
+    const url=pvC.toDataURL("image/jpeg",.9);        // プレビューはJPEGで十分・数十倍速い
+    $("cSafe").checked=keepSafe;exporting=wasExp;
     const room=Math.max(120,(document.querySelector(".actual")?.clientWidth||320)-36);
     [["pv1","c1",ratio.small],["pv2","c2",ratio.mid]].forEach(([i,c,w])=>{
       const el=$(i),ww=Math.min(w,room);
@@ -773,7 +781,7 @@ function syncPv(){
       $(c).textContent=ww===w?`${w}px`:`${ww}px（実寸${w}px）`;
     });
     exporting=false;render0();
-  },110);
+  },140);
 }
 function drawClean(){
   const W=cv.width,H=cv.height;
@@ -916,7 +924,7 @@ function segs(){
   const r=$("ratios");r.innerHTML="";
   RATIOS.forEach(x=>{const b=document.createElement("button");
     b.innerHTML=`${x.nm}<small>${x.sub}</small>`;b.setAttribute("aria-pressed",x.id===ratio.id);
-    b.onclick=()=>{ratio=x;cv.width=x.w;cv.height=x.h;segs();if(img)paintProposals();render();};r.appendChild(b);});
+    b.onclick=()=>{ratio=x;cv.width=x.w;cv.height=x.h;segs();render();if(img)paintProposals();};r.appendChild(b);});
 }
 function paintChips(){
   const box=$("chips");
@@ -931,7 +939,13 @@ function paintChips(){
 function paintProposals(){
   const host=$("props");host.innerHTML="";
   if(!img){$("propHint").textContent="写真を読み込むと、静かな領域を測って配置ごと提案します。";return;}
-  const list=buildProposals();
+  let list;
+  try{ list=buildProposals(); }
+  catch(err){
+    console.error(err);
+    $("propHint").textContent="提案の生成に失敗しました（描画は継続しています）。";
+    return;
+  }
   $("propHint").textContent=`明るさ ${pct(analysis.luma)} ／ 彩度 ${pct(analysis.sat)} ／ 情報量 ${pct(analysis.edge)} ／ 切り落とし ${pct(cropLoss())}%`;
   list.forEach((p,i)=>{
     const el=document.createElement("div");
@@ -960,7 +974,7 @@ function load(f){
   if(!f||!f.type.startsWith("image/"))return;
   const url=URL.createObjectURL(f),im=new Image();
   im.onload=()=>{img=im;analysis=analyze(im);accent=pickAccent(analysis.palette);
-    paintChips();checkContrast();buildBlocks();paintProposals();render();URL.revokeObjectURL(url);};
+    paintChips();checkContrast();buildBlocks();render();paintProposals();URL.revokeObjectURL(url);};
   im.src=url;
 }
 
