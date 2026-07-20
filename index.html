@@ -14,7 +14,7 @@
 <link rel="apple-touch-icon" href="./icons/icon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Biz+UDPMincho&family=BIZ+UDPGothic&family=Dela+Gothic+One&family=DotGothic16&family=Hachi+Maru+Pop&family=Hina+Mincho&family=Kaisei+Decol:wght@400;700&family=Kaisei+Opti:wght@400;700&family=Kaisei+Tokumin:wght@400;700;800&family=Klee+One:wght@400;600&family=Kosugi+Maru&family=M+PLUS+1p:wght@400;700;800&family=M+PLUS+Rounded+1c:wght@400;700;800&family=Mochiy+Pop+One&family=Murecho:wght@400;700;900&family=New+Tegomin&family=Noto+Sans+JP:wght@400;700;900&family=Noto+Serif+JP:wght@400;700;900&family=Potta+One&family=Rampart+One&family=Reggae+One&family=RocknRoll+One&family=Sawarabi+Gothic&family=Sawarabi+Mincho&family=Shippori+Antique&family=Shippori+Mincho:wght@400;600;800&family=Shippori+Mincho+B1:wght@400;600;800&family=Stick&family=Train+One&family=Yuji+Boku&family=Yuji+Mai&family=Yuji+Syuku&family=Yusei+Magic&family=Zen+Antique&family=Zen+Antique+Soft&family=Zen+Kaku+Gothic+Antique:wght@400;700;900&family=Zen+Kaku+Gothic+New:wght@400;700;900&family=Zen+Maru+Gothic:wght@400;700;900&family=Zen+Old+Mincho:wght@400;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Biz+UDPMincho&family=BIZ+UDPGothic&family=Dela+Gothic+One&family=DotGothic16&family=Hachi+Maru+Pop&family=Hina+Mincho&family=IBM+Plex+Sans+JP:wght@400;700&family=Kaisei+HarunoUmi:wght@400;700;800&family=Kiwi+Maru:wght@300;400;500&family=M+PLUS+1:wght@400;700;900&family=Monomaniac+One&family=Palette+Mosaic&family=Rock+3D&family=Shizuru&family=Yomogi&family=Zen+Kurenaido&family=Kaisei+Decol:wght@400;700&family=Kaisei+Opti:wght@400;700&family=Kaisei+Tokumin:wght@400;700;800&family=Klee+One:wght@400;600&family=Kosugi+Maru&family=M+PLUS+1p:wght@400;700;800&family=M+PLUS+Rounded+1c:wght@400;700;800&family=Mochiy+Pop+One&family=Murecho:wght@400;700;900&family=New+Tegomin&family=Noto+Sans+JP:wght@400;700;900&family=Noto+Serif+JP:wght@400;700;900&family=Potta+One&family=Rampart+One&family=Reggae+One&family=RocknRoll+One&family=Sawarabi+Gothic&family=Sawarabi+Mincho&family=Shippori+Antique&family=Shippori+Mincho:wght@400;600;800&family=Shippori+Mincho+B1:wght@400;600;800&family=Stick&family=Train+One&family=Yuji+Boku&family=Yuji+Mai&family=Yuji+Syuku&family=Yusei+Magic&family=Zen+Antique&family=Zen+Antique+Soft&family=Zen+Kaku+Gothic+Antique:wght@400;700;900&family=Zen+Kaku+Gothic+New:wght@400;700;900&family=Zen+Maru+Gothic:wght@400;700;900&family=Zen+Old+Mincho:wght@400;700;900&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Alfa+Slab+One&family=Anton&family=Archivo+Black&family=Barlow+Condensed:wght@400;700;900&family=Bebas+Neue&family=Bodoni+Moda:wght@400;700;900&family=Chivo:wght@400;700;900&family=Cinzel:wght@400;700;900&family=Cormorant+Garamond:wght@300;500;700&family=DM+Serif+Display&family=EB+Garamond:wght@400;700;800&family=Fjalla+One&family=Instrument+Serif&family=Inter:wght@400;700;900&family=Italiana&family=Josefin+Sans:wght@400;700&family=Libre+Baskerville:wght@400;700&family=Lora:wght@400;700&family=Marcellus&family=Montserrat:wght@400;700;900&family=Oswald:wght@400;700&family=Playfair+Display:wght@400;700;900&family=Poppins:wght@400;700;900&family=Raleway:wght@400;700;900&family=Righteous&family=Space+Grotesk:wght@400;700&family=Syne:wght@400;700;800&family=Teko:wght@400;700&family=Unbounded:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
   :root{
@@ -101,6 +101,11 @@
   .count{float:right;font-family:"Bodoni Moda",serif;font-size:10px}
   .count.over{color:var(--hot)}
   .hint{font-size:10px;color:var(--muted);line-height:1.7;margin:6px 0 0}
+  .prop{border:1px solid var(--line);border-radius:var(--r);padding:10px 11px;margin-bottom:8px}
+  .prop h3{margin:0 0 5px;font-size:12px;font-weight:500;display:flex;align-items:center;gap:7px}
+  .prop h3 i{font-family:"Bodoni Moda",serif;font-style:normal;font-size:13px;color:var(--hot)}
+  .prop p{margin:0 0 8px;font-size:11px;line-height:1.75;color:var(--muted)}
+  .prop button{width:100%;padding:7px}
 </style>
 </head>
 <body>
@@ -134,15 +139,19 @@
       <h2>Photograph</h2>
       <div class="drop" id="drop"><b>写真を選ぶ</b><br>タップ、またはドロップ</div>
       <input type="file" id="file" accept="image/*" hidden>
-      <div class="chips" id="chips"></div>
-      <div id="contrast"></div>
+    </section>
+
+    <section>
+      <h2>Design proposals</h2>
+      <p class="hint" id="propHint">写真を読み込むと、静かな領域を測って配置ごと提案します。</p>
+      <div id="props"></div>
     </section>
 
     <section>
       <h2>Text</h2>
+      <div id="contrast" style="margin:0 0 11px"></div>
       <div id="blocks"></div>
-      <p class="hint">プレビュー上の文字を直接ドラッグして位置を決められます。写真から書体を提案させたいときは下の3つから。</p>
-      <div class="seg" id="presets" style="grid-template-columns:repeat(3,1fr);margin-top:9px"></div>
+      <p class="hint">プレビュー上の文字を直接ドラッグして位置を決められます。中央に近づくとスナップします。</p>
     </section>
 
     <section>
@@ -215,6 +224,7 @@ const FONTS=[
  {g:"和文 明朝", id:"kaiseitoku", nm:"Kaisei Tokumin",      f:'"Kaisei Tokumin", serif'},
  {g:"和文 明朝", id:"kaiseiopti", nm:"Kaisei Opti",         f:'"Kaisei Opti", serif'},
  {g:"和文 明朝", id:"kaisei",     nm:"Kaisei Decol",        f:'"Kaisei Decol", serif'},
+ {g:"和文 明朝", id:"kaiseiharu", nm:"Kaisei HarunoUmi",    f:'"Kaisei HarunoUmi", serif'},
  {g:"和文 明朝", id:"zenantique", nm:"Zen Antique",         f:'"Zen Antique", serif'},
  {g:"和文 明朝", id:"zenantiques",nm:"Zen Antique Soft",    f:'"Zen Antique Soft", serif'},
  {g:"和文 明朝", id:"shipant",    nm:"しっぽりアンティーク",  f:'"Shippori Antique", sans-serif'},
@@ -229,6 +239,9 @@ const FONTS=[
  {g:"和文 ゴシック", id:"zenmaru",    nm:"Zen丸ゴシック",     f:'"Zen Maru Gothic", sans-serif'},
  {g:"和文 ゴシック", id:"mplusround", nm:"M PLUS Rounded 1c", f:'"M PLUS Rounded 1c", sans-serif'},
  {g:"和文 ゴシック", id:"kosugimaru", nm:"小杉丸",            f:'"Kosugi Maru", sans-serif'},
+ {g:"和文 ゴシック", id:"ibmplexjp",  nm:"IBM Plex Sans JP",  f:'"IBM Plex Sans JP", sans-serif'},
+ {g:"和文 ゴシック", id:"mplus1",     nm:"M PLUS 1",          f:'"M PLUS 1", sans-serif'},
+ {g:"和文 ゴシック", id:"kiwimaru",   nm:"Kiwi Maru（やわらか）", f:'"Kiwi Maru", serif'},
  // 和文・デザイン
  {g:"和文 デザイン", id:"dela",     nm:"Dela Gothic One（極太）", f:'"Dela Gothic One", sans-serif'},
  {g:"和文 デザイン", id:"rampart",  nm:"Rampart One（立体）",     f:'"Rampart One", sans-serif'},
@@ -245,6 +258,12 @@ const FONTS=[
  {g:"和文 デザイン", id:"yujimai",  nm:"Yuji Mai（筆・流麗）",    f:'"Yuji Mai", serif'},
  {g:"和文 デザイン", id:"mochiy",   nm:"Mochiy Pop One",         f:'"Mochiy Pop One", sans-serif'},
  {g:"和文 デザイン", id:"hachi",    nm:"Hachi Maru Pop",         f:'"Hachi Maru Pop", cursive'},
+ {g:"和文 デザイン", id:"monomaniac",nm:"Monomaniac One（角）",    f:'"Monomaniac One", sans-serif'},
+ {g:"和文 デザイン", id:"rock3d",   nm:"Rock 3D（立体）",         f:'"Rock 3D", cursive'},
+ {g:"和文 デザイン", id:"shizuru",  nm:"Shizuru（大胆）",         f:'"Shizuru", sans-serif'},
+ {g:"和文 デザイン", id:"kurenaido",nm:"Zen Kurenaido（硬筆）",   f:'"Zen Kurenaido", sans-serif'},
+ {g:"和文 デザイン", id:"yomogi",   nm:"Yomogi（手書き）",        f:'"Yomogi", cursive'},
+ {g:"和文 デザイン", id:"palette",  nm:"Palette Mosaic（装飾）",  f:'"Palette Mosaic", cursive'},
  // 欧文・サンセリフ
  {g:"欧文 サンセリフ", id:"anton",   nm:"Anton（極太）",        f:'"Anton", sans-serif'},
  {g:"欧文 サンセリフ", id:"archivo", nm:"Archivo Black",       f:'"Archivo Black", sans-serif'},
@@ -281,14 +300,146 @@ const FONTS=[
 ];
 const fontOf=id=>FONTS.find(f=>f.id===id)||FONTS[0];
 
-const SUGGEST=[
- {id:"impact",nm:"IMPACT",ds:"太く確実に読める",main:"notosansjp",mw:900,sub:"notosansjp",sw:700,
-  score:a=>1.0+a.edge*.8+a.sat*.5},
- {id:"mag",nm:"MAGAZINE",ds:"雑誌の質感",main:"zenold",mw:900,sub:"bodoni",sw:700,
-  score:a=>.9+(1-a.sat)*.9+(1-a.edge)*.6},
- {id:"still",nm:"STILL",ds:"静かな写真に",main:"shippori",mw:800,sub:"cormorant",sw:500,
-  score:a=>.8+(1-a.luma)*1.1+(1-a.edge)*.7}
+/* ---------- design proposal engine ----------------------------------------
+   写真を実際の出力比率でサンプリングし、領域ごとの明るさと情報量を測って
+   「どこに置くか」まで決める。すべてローカル計算。 */
+const POOL={
+  minchoHeavy:["shipporib1","kaiseitoku","notoserifjp","zenold"],
+  minchoFine :["hina","shippori","zenantique","tegomin"],
+  gothicHeavy:["dela","notosansjp","zenkaku","monomaniac"],
+  brush      :["yujiboku","yujisyuku","kurenaido"],
+  latinSerif :["bodoni","instrument","italiana","cormorant","playfair"],
+  latinSans  :["anton","bebas","oswald","space"]
+};
+const pick=(arr,i)=>arr[i%arr.length];
+
+const ZONES=[
+ {id:"上部",     x:.07,y:.07,w:.86,h:.20},
+ {id:"中央",     x:.07,y:.40,w:.86,h:.22},
+ {id:"下部",     x:.07,y:.68,w:.86,h:.24},
+ {id:"左上",     x:.06,y:.07,w:.48,h:.26},
+ {id:"右上",     x:.46,y:.07,w:.48,h:.26},
+ {id:"左下",     x:.06,y:.62,w:.48,h:.30},
+ {id:"右下",     x:.46,y:.62,w:.48,h:.30}
 ];
+
+function scanLayout(){
+  const W=cv.width,H=cv.height,n=48,m=Math.max(8,Math.round(n*H/W));
+  const c=document.createElement("canvas");c.width=n;c.height=m;
+  const g=c.getContext("2d",{willReadFrequently:true});
+  const s=Math.max(n/img.width,m/img.height),w=img.width*s,h=img.height*s;
+  g.drawImage(img,(n-w)/2,(m-h)/2,w,h);
+  const d=g.getImageData(0,0,n,m).data,L=new Float32Array(n*m);
+  for(let i=0,p=0;i<d.length;i+=4,p++)L[p]=(.2126*d[i]+.7152*d[i+1]+.0722*d[i+2])/255;
+  const E=new Float32Array(n*m);
+  for(let y=0;y<m;y++)for(let x=0;x<n;x++){
+    const i=y*n+x;
+    E[i]=(x<n-1?Math.abs(L[i]-L[i+1]):0)+(y<m-1?Math.abs(L[i]-L[i+n]):0);
+  }
+  return{n,m,L,E};
+}
+function zoneStats(la,z){
+  const x0=Math.max(0,Math.floor(z.x*la.n)),x1=Math.min(la.n,Math.ceil((z.x+z.w)*la.n));
+  const y0=Math.max(0,Math.floor(z.y*la.m)),y1=Math.min(la.m,Math.ceil((z.y+z.h)*la.m));
+  let lum=0,edg=0,c=0;
+  for(let y=y0;y<y1;y++)for(let x=x0;x<x1;x++){const i=y*la.n+x;lum+=la.L[i];edg+=la.E[i];c++;}
+  return c?{luma:lum/c,edge:Math.min(1,edg/c/.075)}:{luma:.5,edge:.5};
+}
+function cropLoss(){ // cover で切り落とされる面積の割合
+  const ar=cv.width/cv.height,ai=img.width/img.height;
+  return 1-Math.min(ar,ai)/Math.max(ar,ai);
+}
+function warmth(){ // 暖色か寒色か（-1..1）
+  let w=0;analysis.palette.forEach(h=>{const[r,g,b]=toRgb(h);w+=(r-b)/255;});
+  return w/analysis.palette.length;
+}
+const pct=v=>Math.round(v*100);
+
+function buildProposals(){
+  const la=scanLayout();
+  const zs=ZONES.map(z=>({...z,...zoneStats(la,z)}));
+  const quiet=[...zs].sort((a,b)=>a.edge-b.edge);
+  const dark =[...zs].sort((a,b)=>a.luma-b.luma);
+  const a=analysis,w=warmth(),loss=cropLoss();
+  const seed=Math.round((a.luma+a.sat+a.edge)*97);
+  const out=[];
+
+  /* 案1：一番静かな領域に置く（写真を主役にする） */
+  {
+    const z=quiet[0];
+    const white=z.luma<.55;
+    const jp=white? pick(POOL.minchoHeavy,seed) : pick(POOL.minchoFine,seed);
+    out.push({
+      nm:"余白に沿わせる",
+      why:`${z.id}が最も静か（情報量 ${pct(z.edge)}）。明るさ ${pct(z.luma)} なので文字は${white?"白":"黒"}。`
+         +`写真を沈めるのは${white?"軽め":"不要"}にして、絵を潰さない。`,
+      apply(){
+        set("main",{font:jp,weight:white?900:700,color:white?"white":"black",vert:false,align:"left",size:92,
+                    x:z.x,y:z.y+.02});
+        set("sub",{on:true,font:pick(POOL.latinSerif,seed),weight:500,color:white?"white":"black",
+                   size:100,x:z.x,y:z.y+.02+.13});
+        set("tag",{on:false});
+        setUI({dark:white?26:0,dim:0,mask:false,fit:"cover",margin:0,rule:false,edge:a.edge>.5});
+      }
+    });
+  }
+
+  /* 案2：暗部を土台にして強く言い切る */
+  {
+    const z=dark[0].luma<.4?dark[0]:ZONES[2];
+    const bottom=z.y>.5;
+    out.push({
+      nm:"暗部に載せて断言する",
+      why:`${z.id}が最も暗い（明るさ ${pct(z.luma)}）。ここを土台に極太で置き、`
+         +`${bottom?"下を":"周囲を"}沈めて文字の裏を無音にする。実寸で最も潰れにくい構成。`,
+      apply(){
+        set("main",{font:pick(POOL.gothicHeavy,seed+1),weight:900,color:"white",vert:false,align:"left",
+                    size:112,x:.07,y:bottom?.66:.12});
+        set("sub",{on:true,font:pick(POOL.latinSans,seed+1),weight:700,color:"white",size:96,
+                   x:.07,y:bottom?.66+.15:.12+.15});
+        set("tag",{on:true,font:pick(POOL.latinSans,seed+1),weight:700,color:"accent",size:100,
+                   x:.07,y:bottom?.58:.04});
+        setUI({dark:bottom?68:34,dim:a.luma>.62?18:0,mask:false,fit:"cover",margin:0,rule:false,edge:true});
+      }
+    });
+  }
+
+  /* 案3：縦組みで雑誌の見開きにする */
+  {
+    const right=zoneStats(la,{x:.62,y:.08,w:.32,h:.7});
+    const left =zoneStats(la,{x:.06,y:.08,w:.32,h:.7});
+    const useRight=right.edge<=left.edge;
+    const z=useRight?{x:.72,y:.09,luma:right.luma,edge:right.edge}:{x:.07,y:.09,luma:left.luma,edge:left.edge};
+    const jp=w>.08? pick(POOL.brush,seed+2) : pick(POOL.minchoHeavy,seed+2);
+    out.push({
+      nm:"縦組みで抜く",
+      why:`${useRight?"右":"左"}の帯が静か（情報量 ${pct(z.edge)}）。縦組みは横位置を取らないので絵を殺さない。`
+         +`色は${w>.08?"暖色寄り":"寒色寄り"}なので${w>.08?"筆書体":"重い明朝"}が馴染む。`
+         +(loss>.12?`／この写真は ${pct(loss)}% が切れるので余白付きを推奨。`:""),
+      apply(){
+        set("main",{font:jp,weight:900,color:z.luma<.55?"white":"black",vert:true,size:96,x:z.x,y:z.y});
+        set("sub",{on:true,font:pick(POOL.latinSerif,seed+2),weight:500,color:z.luma<.55?"white":"black",
+                   size:92,x:.07,y:.86});
+        set("tag",{on:false});
+        setUI({dark:z.luma<.55?30:0,dim:0,mask:false,
+               fit:loss>.12?"contain":"cover",margin:loss>.12?4:0,fill:"blur",rule:loss>.12,edge:a.edge>.55});
+      }
+    });
+  }
+  return out;
+}
+function set(key,o){Object.assign(state[key],o);if(o.on===undefined&&key!=="tag")state[key].on=true;}
+function setUI(o){
+  if(o.dark!==undefined){$("sDark").value=o.dark;$("vDark").textContent=o.dark;}
+  if(o.dim!==undefined){$("sDim").value=o.dim;$("vDim").textContent=o.dim;}
+  if(o.mask!==undefined)$("cMask").checked=o.mask;
+  if(o.edge!==undefined){$("cEdge").checked=o.edge;const u=$("cEdgeUI");if(u)u.checked=o.edge;}
+  if(o.fit!==undefined)frame.mode=o.fit;
+  if(o.margin!==undefined){frame.margin=o.margin;$("sMargin").value=o.margin;$("vMargin").textContent=o.margin;}
+  if(o.fill!==undefined){frame.fill=o.fill;$("fFill").value=o.fill;}
+  if(o.rule!==undefined){frame.rule=o.rule;$("cRule").checked=o.rule;}
+  fitSegs();
+}
 
 const BLOCKS=[
  {key:"main",nm:"メイン",tag:"MAIN"},
@@ -610,6 +761,7 @@ function buildBlocks(){
           </select>
         </div>
         <div class="slider"><label>大きさ</label><input type="range" data-act="size" min="40" max="220" value="${b.size}"><span class="val" data-val>${b.size}</span></div>
+        ${meta.key==="tag"?`<label style="margin-top:4px">アクセント色（この地色と、他ブロックで「アクセント」を選んだときの文字色）</label><div class="chips" id="chips"></div>`:""}
         <div class="place">
           <button data-pos="tl">左上</button><button data-pos="tc">上中</button><button data-pos="tr">右上</button>
           <button data-pos="bl">左下</button><button data-pos="bc">下中</button><button data-pos="br">右下</button>
@@ -646,6 +798,7 @@ function buildBlocks(){
     });
     updCount(el,b);
     host.appendChild(el);
+    if(meta.key==="tag")paintChips();
   });
 }
 function updCount(el,b){
@@ -673,28 +826,35 @@ function segs(){
   const r=$("ratios");r.innerHTML="";
   RATIOS.forEach(x=>{const b=document.createElement("button");
     b.innerHTML=`${x.nm}<small>${x.sub}</small>`;b.setAttribute("aria-pressed",x.id===ratio.id);
-    b.onclick=()=>{ratio=x;cv.width=x.w;cv.height=x.h;segs();render();};r.appendChild(b);});
+    b.onclick=()=>{ratio=x;cv.width=x.w;cv.height=x.h;segs();if(img)paintProposals();render();};r.appendChild(b);});
 }
 function paintChips(){
-  const box=$("chips");box.innerHTML="";
-  if(!analysis)return;
+  const box=$("chips");
+  if(!box)return;
+  box.innerHTML="";
+  if(!analysis){box.innerHTML='<span class="hint">写真を読み込むと色が並びます。</span>';return;}
   analysis.palette.forEach(h=>{const b=document.createElement("button");
     b.className="chip";b.style.background=h;b.title=`アクセントを ${h} にする`;
     b.setAttribute("aria-pressed",h===accent);
     b.onclick=()=>{accent=h;paintChips();checkContrast();render();};box.appendChild(b);});
 }
-function paintSuggest(ranked){
-  const box=$("presets");box.innerHTML="";
-  (ranked||SUGGEST).forEach((p,i)=>{
-    const b=document.createElement("button");
-    b.innerHTML=`${p.nm}<small>${p.ds}</small>`;
-    b.onclick=()=>{
-      state.main.font=p.main;state.main.weight=p.mw;
-      state.sub.font=p.sub;state.sub.weight=p.sw;
-      state.tag.font=p.sub;state.tag.weight=p.sw;
-      buildBlocks();loadFont(state.main);loadFont(state.sub);render();
+function paintProposals(){
+  const host=$("props");host.innerHTML="";
+  if(!img){$("propHint").textContent="写真を読み込むと、静かな領域を測って配置ごと提案します。";return;}
+  const list=buildProposals();
+  $("propHint").textContent=`明るさ ${pct(analysis.luma)} ／ 彩度 ${pct(analysis.sat)} ／ 情報量 ${pct(analysis.edge)} ／ 切り落とし ${pct(cropLoss())}%`;
+  list.forEach((p,i)=>{
+    const el=document.createElement("div");
+    el.className="prop";
+    el.innerHTML=`<h3><i>${i+1}</i>${p.nm}</h3><p>${p.why}</p><button>この案を適用</button>`;
+    el.querySelector("button").onclick=()=>{
+      p.apply();buildBlocks();
+      [state.main,state.sub,state.tag].forEach(loadFont);
+      render();
+      el.querySelector("button").textContent="適用しました";
+      setTimeout(()=>{const b=el.querySelector("button");if(b)b.textContent="この案を適用";},1400);
     };
-    box.appendChild(b);
+    host.appendChild(el);
   });
 }
 function checkContrast(){
@@ -710,8 +870,7 @@ function load(f){
   if(!f||!f.type.startsWith("image/"))return;
   const url=URL.createObjectURL(f),im=new Image();
   im.onload=()=>{img=im;analysis=analyze(im);accent=pickAccent(analysis.palette);
-    const ranked=[...SUGGEST].sort((a,b)=>b.score(analysis)-a.score(analysis));
-    paintChips();paintSuggest(ranked);checkContrast();render();URL.revokeObjectURL(url);};
+    paintChips();checkContrast();buildBlocks();paintProposals();render();URL.revokeObjectURL(url);};
   im.src=url;
 }
 
@@ -817,7 +976,7 @@ $("fFill").addEventListener("change",e=>{frame.fill=e.target.value;render();});
 $("sMargin").addEventListener("input",e=>{frame.margin=+e.target.value;$("vMargin").textContent=e.target.value;render();});
 $("cRule").addEventListener("change",e=>{frame.rule=e.target.checked;render();});
 
-segs();fitSegs();buildBlocks();paintSuggest();
+segs();fitSegs();buildBlocks();paintProposals();
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(render);
 render();
 })();
