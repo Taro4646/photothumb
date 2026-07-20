@@ -42,18 +42,19 @@ Actions を使わず Branch 配信にする場合は、Source を `main` / `root
 ## ファイル構成
 
 ```
-index.html              マークアップ
-css/style.css           UI のスタイル
-js/app.js               解析・組版・書き出しの全ロジック
+index.html              全部入り（HTML / CSS / 解析・組版・書き出しロジック）
 sw.js                   Service Worker（変更を出したら CACHE を上げる）
 manifest.webmanifest    PWA マニフェスト
 icons/                  192 / 512 / 1024px
 .github/workflows/      Pages デプロイ
 ```
 
+意図的に単一ファイルにしてある。`index.html` をダブルクリックすればどこでもそのまま動くので、
+サーバーを立てずに手元で確認できる（Service Worker だけは `http://` でないと動かない）。
+
 ## 手を入れるところ
 
-**書体ペアを足す** — `js/app.js` の `TYPES` に 1 要素追加する。`score(a)` が写真の特徴
+**書体ペアを足す** — `index.html` 内の `TYPES` に 1 要素追加する。`score(a)` が写真の特徴
 （`a.luma` 明るさ / `a.sat` 彩度 / `a.edge` 情報量、いずれも 0–1）を受け取って数値を返し、
 その大きい順に提案される。提案がしっくりこないときは、まずここを触るのが一番効く。
 
