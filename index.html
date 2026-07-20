@@ -28,13 +28,14 @@
     font-family:"Noto Sans JP",-apple-system,BlinkMacSystemFont,sans-serif;
     -webkit-font-smoothing:antialiased;padding-bottom:env(safe-area-inset-bottom);
   }
-  header{display:block;width:100%;text-align:center;
+  header{position:fixed;top:0;left:0;right:0;width:100vw;text-align:center;
     padding:calc(13px + env(safe-area-inset-top)) 18px 13px;border-bottom:1px solid var(--line);
-    position:sticky;top:0;left:0;background:var(--ink);z-index:9}
+    background:var(--ink);z-index:20}
+  #hspace{width:100%}
   header h1{font-family:"Archivo Black",sans-serif;font-size:16px;margin:0;letter-spacing:-.01em}
   
 
-  html{overflow-x:hidden}
+  html,body{overflow-x:clip}
   .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,390px)}
   @media(max-width:960px){.wrap{grid-template-columns:1fr}}
 
@@ -105,12 +106,14 @@
   .prop h3{margin:0 0 5px;font-size:12px;font-weight:500;display:flex;align-items:center;gap:7px}
   .prop h3 i{font-family:"Bodoni Moda",serif;font-style:normal;font-size:13px;color:var(--hot)}
   .prop p{margin:0 0 8px;font-size:11px;line-height:1.75;color:var(--muted)}
+  .prop .spec{font-family:"Bodoni Moda",serif;font-size:10px;letter-spacing:.06em;color:var(--paper);opacity:.75;margin:0 0 8px}
   .prop button{width:100%;padding:7px}
 </style>
 </head>
 <body>
 
-<header><h1>THUMB FORGE</h1></header>
+<header id="bar"><h1>THUMB FORGE</h1></header>
+<div id="hspace"></div>
 
 <div class="wrap">
   <div class="stage">
@@ -301,27 +304,22 @@ const FONTS=[
 const fontOf=id=>FONTS.find(f=>f.id===id)||FONTS[0];
 
 /* ---------- design proposal engine ----------------------------------------
-   写真を実際の出力比率でサンプリングし、領域ごとの明るさと情報量を測って
-   「どこに置くか」まで決める。すべてローカル計算。 */
+   組版の判断は目分量ではなく計測に基づく。
+   1) 出力比率のまま写真をサンプリングし、領域ごとの明るさ／情報量を測る
+   2) 実寸プレビュー幅から逆算して「読める最小級数」を出す
+   3) 置こうとしている矩形の明るさからコントラスト比を計算し、文字色と沈め量を決める
+   4) 三分割・版面マージン・プラットフォームのセーフゾーンで配置候補を採点する      */
+const MARGIN=.065;
 const POOL={
   minchoHeavy:["shipporib1","kaiseitoku","notoserifjp","zenold"],
   minchoFine :["hina","shippori","zenantique","tegomin"],
   gothicHeavy:["dela","notosansjp","zenkaku","monomaniac"],
-  brush      :["yujiboku","yujisyuku","kurenaido"],
+  brush      :["yujiboku","yujisyuku","kurenaido","shizuru"],
   latinSerif :["bodoni","instrument","italiana","cormorant","playfair"],
   latinSans  :["anton","bebas","oswald","space"]
 };
-const pick=(arr,i)=>arr[i%arr.length];
-
-const ZONES=[
- {id:"上部",     x:.07,y:.07,w:.86,h:.20},
- {id:"中央",     x:.07,y:.40,w:.86,h:.22},
- {id:"下部",     x:.07,y:.68,w:.86,h:.24},
- {id:"左上",     x:.06,y:.07,w:.48,h:.26},
- {id:"右上",     x:.46,y:.07,w:.48,h:.26},
- {id:"左下",     x:.06,y:.62,w:.48,h:.30},
- {id:"右下",     x:.46,y:.62,w:.48,h:.30}
-];
+const pick=(a,i)=>a[Math.abs(i)%a.length];
+const pct=v=>Math.round(v*100);
 
 function scanLayout(){
   const W=cv.width,H=cv.height,n=48,m=Math.max(8,Math.round(n*H/W));
@@ -332,97 +330,186 @@ function scanLayout(){
   const d=g.getImageData(0,0,n,m).data,L=new Float32Array(n*m);
   for(let i=0,p=0;i<d.length;i+=4,p++)L[p]=(.2126*d[i]+.7152*d[i+1]+.0722*d[i+2])/255;
   const E=new Float32Array(n*m);
-  for(let y=0;y<m;y++)for(let x=0;x<n;x++){
-    const i=y*n+x;
-    E[i]=(x<n-1?Math.abs(L[i]-L[i+1]):0)+(y<m-1?Math.abs(L[i]-L[i+n]):0);
-  }
+  for(let y=0;y<m;y++)for(let x=0;x<n;x++){const i=y*n+x;
+    E[i]=(x<n-1?Math.abs(L[i]-L[i+1]):0)+(y<m-1?Math.abs(L[i]-L[i+n]):0);}
   return{n,m,L,E};
 }
-function zoneStats(la,z){
-  const x0=Math.max(0,Math.floor(z.x*la.n)),x1=Math.min(la.n,Math.ceil((z.x+z.w)*la.n));
-  const y0=Math.max(0,Math.floor(z.y*la.m)),y1=Math.min(la.m,Math.ceil((z.y+z.h)*la.m));
+function zoneStats(la,r){
+  const x0=Math.max(0,Math.floor(r.x*la.n)),x1=Math.min(la.n,Math.ceil((r.x+r.w)*la.n));
+  const y0=Math.max(0,Math.floor(r.y*la.m)),y1=Math.min(la.m,Math.ceil((r.y+r.h)*la.m));
   let lum=0,edg=0,c=0;
   for(let y=y0;y<y1;y++)for(let x=x0;x<x1;x++){const i=y*la.n+x;lum+=la.L[i];edg+=la.E[i];c++;}
   return c?{luma:lum/c,edge:Math.min(1,edg/c/.075)}:{luma:.5,edge:.5};
 }
-function cropLoss(){ // cover で切り落とされる面積の割合
-  const ar=cv.width/cv.height,ai=img.width/img.height;
-  return 1-Math.min(ar,ai)/Math.max(ar,ai);
-}
-function warmth(){ // 暖色か寒色か（-1..1）
-  let w=0;analysis.palette.forEach(h=>{const[r,g,b]=toRgb(h);w+=(r-b)/255;});
-  return w/analysis.palette.length;
-}
-const pct=v=>Math.round(v*100);
+const cropLoss=()=>{const a=cv.width/cv.height,b=img.width/img.height;
+  return 1-Math.min(a,b)/Math.max(a,b);};
+function warmth(){let w=0;analysis.palette.forEach(h=>{const[r,g,b]=toRgb(h);w+=(r-b)/255;});
+  return w/analysis.palette.length;}
 
+/* --- 可読性の計算 ------------------------------------------------------- */
+const ratioOf=(a,b)=>{const x=Math.max(a,b)+.05,y=Math.min(a,b)+.05;return x/y;};
+function scrimFor(bgLuma,target){ // 白文字が target:1 を満たすのに要する黒被せ量
+  if(bgLuma<=.001)return 0;
+  const need=1.05/target-.05;
+  return Math.max(0,Math.min(.85,1-need/bgLuma));
+}
+const legible=key=>Math.ceil(1300/(BASE[key]*ratio.small));   // 実寸で13pxを割らない級数(%)
+const glyphPx=(key,size)=>Math.round(BASE[key]*size/100*ratio.small);
+
+/* --- 改行の当て込み ----------------------------------------------------- */
+const BREAK_OK=new Set(["、","。","・","　"," ","の","に","を","は","が","で","と","へ","も","から","より"]);
+const NO_HEAD=new Set(["、","。","）","」","』","！","？","ー","・"]);
+function balanceLines(t,max){
+  const flat=t.replace(/\n/g,"").trim();
+  const ch=[...flat];
+  if(ch.length<=max)return[flat];
+  const mid=ch.length/2;
+  let best=Math.round(mid),bs=1e9;
+  for(let i=2;i<ch.length-1;i++){
+    if(NO_HEAD.has(ch[i]))continue;
+    let sc=Math.abs(i-mid);
+    if(BREAK_OK.has(ch[i-1]))sc-=1.6;
+    if(sc<bs){bs=sc;best=i;}
+  }
+  return[ch.slice(0,best).join(""),ch.slice(best).join("")];
+}
+
+/* --- 実測サイズ --------------------------------------------------------- */
+function measure(fontId,weight,sizePx,lines,trackPct,vert){
+  ctx.font=`${weight} ${sizePx}px ${fontOf(fontId).f}`;
+  if(vert){
+    const mx=Math.max(...lines.map(l=>[...l].length));
+    return{w:sizePx*1.55*lines.length,h:mx*sizePx*1.06};
+  }
+  const tr=sizePx*trackPct/100;
+  let w=0;
+  lines.forEach(l=>{let x=0;for(const c of l)x+=ctx.measureText(c).width+tr;w=Math.max(w,x-tr);});
+  return{w,h:sizePx*1.24*(lines.length-1)+sizePx*1.1};
+}
+
+/* --- 配置候補の採点 ----------------------------------------------------- */
+function safePenalty(x,y,w,h){
+  let p=0;
+  if(ratio.safe==="yt"){ // 再生時間バッジ
+    if(x+w>.85&&y+h>.88)p+=1.4;
+  }
+  if(ratio.safe==="igsquare"){ // グリッドで正方形に切られる
+    const cut=(1-cv.width/cv.height)/2;
+    if(y<cut||y+h>1-cut)p+=.9;
+  }
+  if(ratio.safe==="story"){ if(y<.13||y+h>.82)p+=1.3; }
+  return p;
+}
+function place(la,box,filter){
+  const W=cv.width,H=cv.height,mX=MARGIN,mY=MARGIN*W/H;
+  const bw=box.w/W,bh=box.h/H;
+  const xs=[["左",mX],["中",(1-bw)/2],["右",1-mX-bw]];
+  const ys=[["上",mY],["上三分",1/3-bh/2],["中",.5-bh/2],["下三分",2/3-bh/2],["下",1-mY-bh]];
+  let best=null;
+  xs.forEach(([xn,x])=>ys.forEach(([yn,y])=>{
+    if(filter&&!filter(xn,yn))return;
+    if(x<-.01||y<-.01||x+bw>1.01||y+bh>1.01)return;
+    const st=zoneStats(la,{x,y,w:bw,h:bh});
+    let sc=(1-st.edge)*1.7;
+    if(yn==="上三分"||yn==="下三分")sc+=.4;
+    if(xn==="左")sc+=.14;
+    sc-=safePenalty(x,y,bw,bh);
+    if(!best||sc>best.sc)best={x,y,sc,st,nm:yn+xn,bw,bh};
+  }));
+  return best;
+}
+
+/* --- 提案の生成 --------------------------------------------------------- */
 function buildProposals(){
-  const la=scanLayout();
-  const zs=ZONES.map(z=>({...z,...zoneStats(la,z)}));
-  const quiet=[...zs].sort((a,b)=>a.edge-b.edge);
-  const dark =[...zs].sort((a,b)=>a.luma-b.luma);
+  const la=scanLayout(),W=cv.width,H=cv.height;
   const a=analysis,w=warmth(),loss=cropLoss();
-  const seed=Math.round((a.luma+a.sat+a.edge)*97);
+  const seed=Math.round((a.luma*7+a.sat*13+a.edge*29)*11);
+  const raw=state.main.text||"タイトル";
   const out=[];
 
-  /* 案1：一番静かな領域に置く（写真を主役にする） */
+  const compose=(cfg)=>{
+    const lines=balanceLines(raw,cfg.perLine);
+    const size=Math.max(legible("main"),cfg.size);
+    const px=W*BASE.main*(size/100);
+    const box=measure(cfg.font,cfg.weight,px,lines,cfg.track,cfg.vert);
+    const p=place(la,box,cfg.filter)||{x:MARGIN,y:.66,st:{luma:a.luma,edge:a.edge},nm:"下左",bw:box.w/W,bh:box.h/H};
+    const bg=p.st.luma;
+    const白=bg<.58;
+    const need=白?scrimFor(bg,4.5):0;
+    const dark=Math.round(Math.min(cfg.maxDark,Math.max(cfg.minDark,need*100)));
+    const eff=白?bg*(1-dark/100):bg;
+    const cr=白?ratioOf(1,eff):ratioOf(.03,eff);
+    return{lines,size,px,box,p,白,dark,cr};
+  };
+
+  /* 案1 — 写真を主役にして、静かな余白に沿わせる */
   {
-    const z=quiet[0];
-    const white=z.luma<.55;
-    const jp=white? pick(POOL.minchoHeavy,seed) : pick(POOL.minchoFine,seed);
+    const jp=pick(POOL.minchoHeavy,seed),ln=pick(POOL.latinSerif,seed);
+    const r=compose({font:jp,weight:900,track:2,size:88,perLine:9,vert:false,minDark:0,maxDark:40});
+    const gap=r.px*.62/H;
     out.push({
       nm:"余白に沿わせる",
-      why:`${z.id}が最も静か（情報量 ${pct(z.edge)}）。明るさ ${pct(z.luma)} なので文字は${white?"白":"黒"}。`
-         +`写真を沈めるのは${white?"軽め":"不要"}にして、絵を潰さない。`,
+      why:`配置は${r.p.nm}。この矩形の情報量 ${pct(r.p.st.edge)}／明るさ ${pct(r.p.st.luma)} で最も静か。`
+         +`文字は${r.白?"白":"黒"}、コントラスト ${r.cr.toFixed(1)}:1 を確保するため沈め ${r.dark}%。`
+         +`級数は実寸 ${ratio.small}px で文字高 ${glyphPx("main",r.size)}px。写真を潰さない下限。`,
+      spec:`${fontOf(jp).nm} ／ ${fontOf(ln).nm}`,
       apply(){
-        set("main",{font:jp,weight:white?900:700,color:white?"white":"black",vert:false,align:"left",size:92,
-                    x:z.x,y:z.y+.02});
-        set("sub",{on:true,font:pick(POOL.latinSerif,seed),weight:500,color:white?"white":"black",
-                   size:100,x:z.x,y:z.y+.02+.13});
+        set("main",{text:r.lines.join("\n"),font:jp,weight:900,track:2,color:r.白?"white":"black",
+                    vert:false,align:"left",size:r.size,x:r.p.x,y:r.p.y});
+        set("sub",{on:true,font:ln,weight:500,track:16,color:r.白?"white":"black",size:96,
+                   x:r.p.x,y:Math.min(.94,r.p.y+r.p.bh+gap)});
         set("tag",{on:false});
-        setUI({dark:white?26:0,dim:0,mask:false,fit:"cover",margin:0,rule:false,edge:a.edge>.5});
+        setUI({dark:r.dark,dim:0,mask:false,fit:"cover",margin:0,rule:false,edge:r.p.st.edge>.45});
       }
     });
   }
 
-  /* 案2：暗部を土台にして強く言い切る */
+  /* 案2 — 暗部を土台に、実寸で最も潰れない太さで言い切る */
   {
-    const z=dark[0].luma<.4?dark[0]:ZONES[2];
-    const bottom=z.y>.5;
+    const jp=pick(POOL.gothicHeavy,seed+1),ln=pick(POOL.latinSans,seed+1);
+    const r=compose({font:jp,weight:900,track:0,size:Math.round(legible("main")*1.28),perLine:8,
+                     vert:false,minDark:35,maxDark:78,
+                     filter:(x,y)=>y==="下"||y==="下三分"});
+    const gap=r.px*.55/H;
     out.push({
       nm:"暗部に載せて断言する",
-      why:`${z.id}が最も暗い（明るさ ${pct(z.luma)}）。ここを土台に極太で置き、`
-         +`${bottom?"下を":"周囲を"}沈めて文字の裏を無音にする。実寸で最も潰れにくい構成。`,
+      why:`${r.p.nm}が土台。明るさ ${pct(r.p.st.luma)} に対し沈め ${r.dark}% を掛けてコントラスト ${r.cr.toFixed(1)}:1。`
+         +`文字高は実寸 ${ratio.small}px で ${glyphPx("main",r.size)}px、可読の下限 13px を ${Math.round(glyphPx("main",r.size)/13*100-100)}% 上回る。`
+         +`情報量 ${pct(r.p.st.edge)} の背景なので縁も併用する。`,
+      spec:`${fontOf(jp).nm} ／ ${fontOf(ln).nm} ／ タグあり`,
       apply(){
-        set("main",{font:pick(POOL.gothicHeavy,seed+1),weight:900,color:"white",vert:false,align:"left",
-                    size:112,x:.07,y:bottom?.66:.12});
-        set("sub",{on:true,font:pick(POOL.latinSans,seed+1),weight:700,color:"white",size:96,
-                   x:.07,y:bottom?.66+.15:.12+.15});
-        set("tag",{on:true,font:pick(POOL.latinSans,seed+1),weight:700,color:"accent",size:100,
-                   x:.07,y:bottom?.58:.04});
-        setUI({dark:bottom?68:34,dim:a.luma>.62?18:0,mask:false,fit:"cover",margin:0,rule:false,edge:true});
+        set("main",{text:r.lines.join("\n"),font:jp,weight:900,track:0,color:"white",
+                    vert:false,align:"left",size:r.size,x:r.p.x,y:r.p.y});
+        set("sub",{on:true,font:ln,weight:700,track:10,color:"white",size:94,
+                   x:r.p.x,y:Math.min(.95,r.p.y+r.p.bh+gap)});
+        set("tag",{on:true,font:ln,weight:700,track:14,color:"accent",size:96,
+                   x:r.p.x,y:Math.max(.03,r.p.y-.075)});
+        setUI({dark:r.dark,dim:a.luma>.66?16:0,mask:false,fit:"cover",margin:0,rule:false,edge:true});
       }
     });
   }
 
-  /* 案3：縦組みで雑誌の見開きにする */
+  /* 案3 — 縦組みで横位置を空け、絵を殺さない */
   {
-    const right=zoneStats(la,{x:.62,y:.08,w:.32,h:.7});
-    const left =zoneStats(la,{x:.06,y:.08,w:.32,h:.7});
-    const useRight=right.edge<=left.edge;
-    const z=useRight?{x:.72,y:.09,luma:right.luma,edge:right.edge}:{x:.07,y:.09,luma:left.luma,edge:left.edge};
-    const jp=w>.08? pick(POOL.brush,seed+2) : pick(POOL.minchoHeavy,seed+2);
+    const jp=w>.06?pick(POOL.brush,seed+2):pick(POOL.minchoHeavy,seed+2);
+    const ln=pick(POOL.latinSerif,seed+2);
+    const r=compose({font:jp,weight:900,track:2,size:Math.max(88,legible("main")),perLine:11,vert:true,
+                     minDark:0,maxDark:45,filter:(x,y)=>(x==="左"||x==="右")&&(y==="上"||y==="上三分")});
     out.push({
       nm:"縦組みで抜く",
-      why:`${useRight?"右":"左"}の帯が静か（情報量 ${pct(z.edge)}）。縦組みは横位置を取らないので絵を殺さない。`
-         +`色は${w>.08?"暖色寄り":"寒色寄り"}なので${w>.08?"筆書体":"重い明朝"}が馴染む。`
-         +(loss>.12?`／この写真は ${pct(loss)}% が切れるので余白付きを推奨。`:""),
+      why:`${r.p.nm}の縦帯（情報量 ${pct(r.p.st.edge)}）に落とす。縦組みは横幅を ${pct(r.p.bw)}% しか使わないので絵が残る。`
+         +`パレットは${w>.06?"暖色":"寒色"}寄りなので${w>.06?"筆書体":"重い明朝"}を当てた。`
+         +(loss>.12?`／この写真は ${pct(loss)}% が切れるため、余白付きに切り替える。`:`／切り落としは ${pct(loss)}% で許容範囲。`),
+      spec:`${fontOf(jp).nm}（縦組み） ／ ${fontOf(ln).nm}`,
       apply(){
-        set("main",{font:jp,weight:900,color:z.luma<.55?"white":"black",vert:true,size:96,x:z.x,y:z.y});
-        set("sub",{on:true,font:pick(POOL.latinSerif,seed+2),weight:500,color:z.luma<.55?"white":"black",
-                   size:92,x:.07,y:.86});
+        set("main",{text:raw.replace(/\n/g,""),font:jp,weight:900,track:2,
+                    color:r.白?"white":"black",vert:true,size:r.size,x:r.p.x,y:r.p.y});
+        set("sub",{on:true,font:ln,weight:500,track:18,color:r.白?"white":"black",size:88,
+                   x:MARGIN,y:.90});
         set("tag",{on:false});
-        setUI({dark:z.luma<.55?30:0,dim:0,mask:false,
-               fit:loss>.12?"contain":"cover",margin:loss>.12?4:0,fill:"blur",rule:loss>.12,edge:a.edge>.55});
+        setUI({dark:r.dark,dim:0,mask:false,
+               fit:loss>.12?"contain":"cover",margin:loss>.12?4:0,fill:"blur",rule:loss>.12,
+               edge:r.p.st.edge>.5});
       }
     });
   }
@@ -433,7 +520,7 @@ function setUI(o){
   if(o.dark!==undefined){$("sDark").value=o.dark;$("vDark").textContent=o.dark;}
   if(o.dim!==undefined){$("sDim").value=o.dim;$("vDim").textContent=o.dim;}
   if(o.mask!==undefined)$("cMask").checked=o.mask;
-  if(o.edge!==undefined){$("cEdge").checked=o.edge;const u=$("cEdgeUI");if(u)u.checked=o.edge;}
+  if(o.edge!==undefined){const h=$("cEdge"),u=$("cEdgeUI");if(h)h.checked=o.edge;if(u)u.checked=o.edge;}
   if(o.fit!==undefined)frame.mode=o.fit;
   if(o.margin!==undefined){frame.margin=o.margin;$("sMargin").value=o.margin;$("vMargin").textContent=o.margin;}
   if(o.fill!==undefined){frame.fill=o.fill;$("fFill").value=o.fill;}
@@ -447,9 +534,9 @@ const BLOCKS=[
  {key:"tag", nm:"タグ", tag:"TAG"}
 ];
 const state={
- main:{on:true, text:"光の生まれる場所", font:"zenold", weight:900, size:100, vert:false, align:"left", color:"white", x:.07,y:.62, open:true},
- sub :{on:true, text:"長崎・五島列島 8日間", font:"bodoni", weight:700, size:100, vert:false, align:"left", color:"white", x:.07,y:.80, open:false},
- tag :{on:false,text:"PHOTO TRIP", font:"bodoni", weight:700, size:100, vert:false, align:"left", color:"accent",x:.07,y:.52, open:false}
+ main:{on:true, text:"光の生まれる場所", font:"zenold", weight:900, size:100, track:2, vert:false, align:"left", color:"white", x:.07,y:.62, open:true},
+ sub :{on:true, text:"長崎・五島列島 8日間", font:"bodoni", weight:700, size:100, track:6, vert:false, align:"left", color:"white", x:.07,y:.80, open:false},
+ tag :{on:false,text:"PHOTO TRIP", font:"bodoni", weight:700, size:100, track:14, vert:false, align:"left", color:"accent",x:.07,y:.52, open:false}
 };
 const BASE={main:.115,sub:.032,tag:.028};
 
@@ -514,7 +601,7 @@ function drawBlock(key){
   if(!lines.length)return null;
   const fo=fontOf(b.font);
   const size=W*BASE[key]*(b.size/100);
-  const tr=size*.02;
+  const tr=size*((b.track===undefined?2:b.track)/100);
   setF(fo.f,size,b.weight);
   const x0=b.x*W,y0=b.y*H;
   const stroke=$("cEdge")&&$("cEdge").checked?size*.055:0;
@@ -761,6 +848,7 @@ function buildBlocks(){
           </select>
         </div>
         <div class="slider"><label>大きさ</label><input type="range" data-act="size" min="40" max="220" value="${b.size}"><span class="val" data-val>${b.size}</span></div>
+        <div class="slider"><label>字間</label><input type="range" data-act="track" min="-4" max="40" value="${b.track}"><span class="val" data-track>${b.track}</span></div>
         ${meta.key==="tag"?`<label style="margin-top:4px">アクセント色（この地色と、他ブロックで「アクセント」を選んだときの文字色）</label><div class="chips" id="chips"></div>`:""}
         <div class="place">
           <button data-pos="tl">左上</button><button data-pos="tc">上中</button><button data-pos="tr">右上</button>
@@ -785,6 +873,7 @@ function buildBlocks(){
         else if(act==="vert"){b.vert=node.value==="1";buildBlocks();}
         else if(act==="align"){b.align=node.value;}
         else if(act==="size"){b.size=+node.value;el.querySelector("[data-val]").textContent=b.size;}
+        else if(act==="track"){b.track=+node.value;el.querySelector("[data-track]").textContent=b.track;}
         render();
       });
     });
@@ -846,7 +935,7 @@ function paintProposals(){
   list.forEach((p,i)=>{
     const el=document.createElement("div");
     el.className="prop";
-    el.innerHTML=`<h3><i>${i+1}</i>${p.nm}</h3><p>${p.why}</p><button>この案を適用</button>`;
+    el.innerHTML=`<h3><i>${i+1}</i>${p.nm}</h3><p>${p.why}</p><p class="spec">${p.spec||""}</p><button>この案を適用</button>`;
     el.querySelector("button").onclick=()=>{
       p.apply();buildBlocks();
       [state.main,state.sub,state.tag].forEach(loadFont);
@@ -975,6 +1064,11 @@ $("cEdgeUI").addEventListener("change",e=>{edge.checked=e.target.checked;render(
 $("fFill").addEventListener("change",e=>{frame.fill=e.target.value;render();});
 $("sMargin").addEventListener("input",e=>{frame.margin=+e.target.value;$("vMargin").textContent=e.target.value;render();});
 $("cRule").addEventListener("change",e=>{frame.rule=e.target.checked;render();});
+
+const bar=$("bar"),hs=$("hspace");
+const fitBar=()=>hs.style.height=bar.offsetHeight+"px";
+fitBar();addEventListener("resize",fitBar);
+if(window.ResizeObserver)new ResizeObserver(fitBar).observe(bar);
 
 segs();fitSegs();buildBlocks();paintProposals();
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(render);
