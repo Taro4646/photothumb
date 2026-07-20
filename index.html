@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>THUMB FORGE — サムネイル組版</title>
+<meta name="description" content="写真から色を解析して、Instagram・YouTube用のサムネイルを組むブラウザツール。実寸プレビューつき。">
+<meta name="theme-color" content="#101216">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" href="./icons/icon-192.png" sizes="192x192">
+<link rel="apple-touch-icon" href="./icons/icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,600..900&family=Anton&family=Archivo+Black&family=Zen+Old+Mincho:wght@700;900&family=Shippori+Mincho:wght@600;800&family=Noto+Sans+JP:wght@500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+
+<header><h1>THUMB FORGE</h1><span>寸 法 検 証 付</span></header>
+
+<div class="wrap">
+  <div class="stage">
+    <canvas id="big" width="1080" height="1350"></canvas>
+    <div class="actual">
+      <div class="note">実寸プレビュー。ここで読めなければ、大きい画面で読めても意味がない。</div>
+      <figure><img id="pv1" alt="実寸プレビュー 小"><figcaption id="c1">–</figcaption></figure>
+      <figure><img id="pv2" alt="実寸プレビュー 中"><figcaption id="c2">–</figcaption></figure>
+    </div>
+  </div>
+
+  <div class="panel">
+    <section>
+      <h2>Format</h2>
+      <div class="seg" id="ratios"></div>
+    </section>
+
+    <section>
+      <h2>Photograph</h2>
+      <div class="drop" id="drop"><b>写真を選ぶ</b><br>タップ、またはドロップ</div>
+      <input type="file" id="file" accept="image/*" hidden>
+      <div class="chips" id="chips"></div>
+      <div id="contrast"></div>
+    </section>
+
+    <section>
+      <h2>Copy</h2>
+      <div class="field">
+        <label for="tMain">メイン<span class="count" id="cnMain">0</span></label>
+        <textarea id="tMain" rows="2">光の生まれる場所</textarea>
+      </div>
+      <div class="field"><label for="tSub">サブ<span class="count" id="cnSub">0</span></label><input type="text" id="tSub" value="長崎・五島列島 8日間"></div>
+      <div class="field"><label for="tTag">タグ（色面に載る短語）</label><input type="text" id="tTag" value="PHOTO TRIP"></div>
+    </section>
+
+    <section>
+      <h2>Layout</h2>
+      <div class="seg three" id="layouts"></div>
+      <div style="height:11px"></div>
+      <div class="presets" id="presets"></div>
+    </section>
+
+    <section>
+      <h2>Adjust</h2>
+      <label class="toggle"><input type="checkbox" id="cMask">被写体を文字の前に出す</label>
+      <label class="toggle"><input type="checkbox" id="cEdge" checked>文字に縁をつける</label>
+      <label class="toggle"><input type="checkbox" id="cSafe" checked>セーフゾーンを表示</label>
+      <div class="slider"><label for="sType">文字の大きさ</label><input type="range" id="sType" min="70" max="140" value="100"><span class="val" id="vType">100</span></div>
+      <div class="slider"><label for="sDark">写真を沈める</label><input type="range" id="sDark" min="0" max="100" value="42"><span class="val" id="vDark">42</span></div>
+      <div class="slider"><label for="sZoom">寄り</label><input type="range" id="sZoom" min="100" max="220" value="100"><span class="val" id="vZoom">100</span></div>
+      <div class="slider"><label for="sMaskW">切抜き幅</label><input type="range" id="sMaskW" min="10" max="95" value="46"><span class="val" id="vMaskW">46</span></div>
+      <div class="slider"><label for="sMaskH">切抜き高</label><input type="range" id="sMaskH" min="10" max="95" value="52"><span class="val" id="vMaskH">52</span></div>
+    </section>
+
+    <section><button class="primary" id="save">PNGで書き出す</button></section>
+  </div>
+</div>
+
+<script src="./js/app.js"></script>
+<script>
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => navigator.serviceWorker.register("./sw.js"));
+  }
+</script>
+</body>
+</html>
